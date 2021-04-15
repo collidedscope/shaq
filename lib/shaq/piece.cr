@@ -1,5 +1,5 @@
 module Shaq
-  class Piece
+  abstract class Piece
     property! position : Int32
 
     def initialize(@side : Side)
@@ -34,4 +34,12 @@ module Shaq
 
   class King < Piece
   end
+
+  {% for piece, letter in {Pawn: 'p', Rook: 'r', Knight: 'n', Bishop: 'b', Queen: 'q', King: 'k'} %}
+    class {{piece}}
+      def inspect(io)
+        io << (@side == Side::Black ? {{letter}} : {{letter}}.upcase)
+      end
+    end
+  {% end %}
 end

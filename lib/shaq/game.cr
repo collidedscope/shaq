@@ -30,5 +30,11 @@ module Shaq
     def self.new
       from_fen START
     end
+
+    def draw
+      @board.each_slice 8 do |row|
+        p row
+      end
+    end
   end
 end
