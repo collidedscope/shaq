@@ -11,9 +11,9 @@ module Shaq::Util
 
     loop do
       target = position + heading
-      break unless 0 <= target < 64
-      break if piece.friendly?(board[target]) || teleport?(position, target)
+      break if !((0..63) === target) || teleport? position, target
       squares << (position = target)
+      break if piece.friendly? board[target]
     end
 
     squares

@@ -14,6 +14,10 @@ module Shaq
       !friendly? other
     end
 
+    def legal_moves(game)
+      vision(game).reject { |square| friendly? game.board[square] }
+    end
+
     def self.from_letter(c : Char)
       case c
       when 'p', 'P'; Pawn
@@ -29,6 +33,12 @@ module Shaq
   class Pawn < Piece
     property? moved = false
 
+    # TODO
+    def vision(game)
+      [] of Int32
+    end
+
+    # TODO
     def legal_moves(game)
       [] of Int32
     end
@@ -37,7 +47,7 @@ module Shaq
   class Rook < Piece
     property? moved = false
 
-    def legal_moves(game)
+    def vision(game)
       [-8, -1, 1, 8].flat_map { |heading| Util.traverse game.board, self, heading }
     end
   end
@@ -45,21 +55,21 @@ module Shaq
   class Knight < Piece
     NEIGHBORS = [-17, -15, -10, -6, 6, 10, 15, 17]
 
-    def legal_moves(game)
-      NEIGHBORS.map(&.+ position).select(0..63).reject { |square|
-        Util.teleport?(position, square) || friendly? game.board[square]
+    def vision(game)
+      NEIGHBORS.map(&.+ position).reject { |square|
+        square < 0 || square > 63 || Util.teleport? position, square
       }
     end
   end
 
   class Bishop < Piece
-    def legal_moves(game)
+    def vision(game)
       [-9, -7, 7, 9].flat_map { |heading| Util.traverse game.board, self, heading }
     end
   end
 
   class Queen < Piece
-    def legal_moves(game)
+    def vision(game)
       ROYAL.flat_map { |heading| Util.traverse game.board, self, heading }
     end
   end
@@ -67,13 +77,17 @@ module Shaq
   class King < Piece
     property? moved = false
 
+    def vision(game)
+      ROYAL.map(&.+ position).reject { |square|
+        square < 0 || square > 63 || Util.teleport? position, square
+      }
+    end
+
     def legal_moves(game)
       threatened = game.board.select(Piece)
-        .select(&.enemy? self).reject(King).flat_map(&.legal_moves game)
+        .select(&.enemy? self).flat_map(&.vision game)
 
-      ROYAL.map(&.+ position).select(0..63).reject { |square|
-        Util.teleport?(position, square) || friendly? game.board[square]
-      } - threatened
+      super - threatened
     end
   end
 
