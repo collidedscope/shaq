@@ -4,5 +4,6 @@ module Shaq
   end
 end
 
+require "shaq/util"
 require "shaq/game"
 require "shaq/piece"
