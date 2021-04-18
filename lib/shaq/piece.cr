@@ -33,14 +33,21 @@ module Shaq
   class Pawn < Piece
     property? moved = false
 
-    # TODO
     def vision(game)
-      [] of Int32
+      (side == Side::White ? [-9, -7] : [7, 9]).map(&.+ position)
+        .reject { |square| Util.teleport? position, square }
     end
 
-    # TODO
     def legal_moves(game)
-      [] of Int32
+      moves = vision(game).select { |square| enemy? game.board[square] }
+      once, twice = side == Side::White ? [-8, -16] : [8, 16]
+
+      if !game.board[position + once]
+        moves << position + once
+        moves << position + twice unless game.board[position + twice] || moved?
+      end
+
+      moves
     end
   end
 
