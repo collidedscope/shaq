@@ -31,9 +31,35 @@ module Shaq
       from_fen START
     end
 
-    # TODO: reject moves which would leave the King in check
     def legal_moves_for(piece)
-      moves = piece.moves self
+      piece.moves(self).reject { |square| ply(piece.position, square, false).check? }
+    end
+
+    def ply
+      @turn = turn == Side::Black ? Side::White : Side::Black
+    end
+
+    def ply(from, to, checked = true)
+      if piece = board[from]
+        unless !checked || legal_moves_for(piece).includes? to
+          raise "Illegal move (#{from}->#{to})"
+        end
+        ply if checked
+        tap { board[from], board[to] = nil, piece.tap &.position= to }
+      else
+        raise "No piece at #{from}!"
+      end
+    end
+
+    def check?
+      pieces = board.select Piece
+      king = pieces.find { |piece| piece.is_a? King && piece.side == turn }.not_nil!
+      vision = pieces.select(&->king.enemy?(Piece)).flat_map &.vision self
+      vision.includes? king.position
+    end
+
+    def clone
+      Game.new board, turn, castling, ep_target, hm_clock, move
     end
 
     def draw
