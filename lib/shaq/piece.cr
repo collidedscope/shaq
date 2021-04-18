@@ -6,16 +6,16 @@ module Shaq
     def initialize(@side : Side)
     end
 
-    def friendly?(other)
-      other.try &.side == side
+    def friend?(other)
+      other.try &.side.== side
     end
 
     def enemy?(other)
-      !friendly? other
+      other.try &.side.!= side
     end
 
     def legal_moves(game)
-      vision(game).reject { |square| friendly? game.board[square] }
+      vision(game).reject { |square| friend? game.board[square] }
     end
 
     def self.from_letter(c : Char)

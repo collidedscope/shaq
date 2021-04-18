@@ -13,7 +13,7 @@ module Shaq::Util
       target = position + heading
       break if !((0..63) === target) || teleport? position, target
       squares << (position = target)
-      break if piece.friendly? board[target]
+      break if piece.friend? board[target]
     end
 
     squares
