@@ -89,13 +89,6 @@ module Shaq
         square < 0 || square > 63 || Util.teleport? position, square
       }
     end
-
-    def moves(game)
-      threatened = game.board.select(Piece)
-        .select(&.enemy? self).flat_map(&.vision game)
-
-      super - threatened
-    end
   end
 
   {% for piece, letter in {Pawn: 'p', Rook: 'r', Knight: 'n', Bishop: 'b', Queen: 'q', King: 'k'} %}
