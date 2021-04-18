@@ -53,9 +53,12 @@ module Shaq
 
     def check?
       pieces = board.select Piece
-      king = pieces.find { |piece| piece.is_a? King && piece.side == turn }.not_nil!
-      vision = pieces.select(&->king.enemy?(Piece)).flat_map &.vision self
-      vision.includes? king.position
+      if king = pieces.find { |piece| piece.is_a? King && piece.side == turn }
+        vision = pieces.select(&->king.enemy?(Piece)).flat_map &.vision self
+        vision.includes? king.position
+      else
+        raise "No #{turn} King?!"
+      end
     end
 
     def clone
