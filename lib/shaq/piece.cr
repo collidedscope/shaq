@@ -14,7 +14,7 @@ module Shaq
       other.try &.side.!= side
     end
 
-    def legal_moves(game)
+    def moves(game)
       vision(game).reject { |square| friend? game.board[square] }
     end
 
@@ -38,7 +38,7 @@ module Shaq
         .reject { |square| Util.teleport? position, square }
     end
 
-    def legal_moves(game)
+    def moves(game)
       moves = vision(game).select { |square| enemy? game.board[square] }
       once, twice = side == Side::White ? [-8, -16] : [8, 16]
 
@@ -90,7 +90,7 @@ module Shaq
       }
     end
 
-    def legal_moves(game)
+    def moves(game)
       threatened = game.board.select(Piece)
         .select(&.enemy? self).flat_map(&.vision game)
 

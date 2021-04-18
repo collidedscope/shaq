@@ -31,6 +31,11 @@ module Shaq
       from_fen START
     end
 
+    # TODO: reject moves which would leave the King in check
+    def legal_moves_for(piece)
+      moves = piece.moves self
+    end
+
     def draw
       @board.each_slice 8 do |row|
         p row
