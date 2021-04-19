@@ -40,7 +40,7 @@ module Shaq
     end
 
     def ply
-      @turn = turn == Side::Black ? Side::White : Side::Black
+      tap { @turn = turn == Side::Black ? Side::White : Side::Black }
     end
 
     def ply(from, to, checked = true)
