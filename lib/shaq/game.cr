@@ -31,8 +31,12 @@ module Shaq
       from_fen START
     end
 
+    def sim(from, to)
+      clone.ply from, to, false
+    end
+
     def legal_moves_for(piece)
-      piece.moves(self).reject { |square| ply(piece.position, square, false).check? }
+      piece.moves(self).reject { |square| sim(piece.position, square).check? }
     end
 
     def ply
