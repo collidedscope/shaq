@@ -66,7 +66,7 @@ module Shaq
     end
 
     def clone
-      Game.new board, turn, castling, ep_target, hm_clock, move
+      dup.tap &.board = board.map &.dup
     end
 
     def draw
