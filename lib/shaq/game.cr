@@ -65,6 +65,22 @@ module Shaq
       end
     end
 
+    def checkmate?
+      return false unless check?
+      pieces = board.select Piece
+
+      king = pieces.find { |piece| piece.is_a? King && piece.side == turn }.not_nil!
+      return false unless legal_moves_for(king).empty?
+
+      pieces.select(&.side.== turn).each do |ally|
+        legal_moves_for(ally).each do |square|
+          return false unless sim(ally.position, square).check?
+        end
+      end
+
+      true
+    end
+
     def clone
       dup.tap &.board = board.map &.dup
     end
