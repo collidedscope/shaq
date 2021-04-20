@@ -93,6 +93,31 @@ module Shaq
       dup.tap &.board = board.map &.dup
     end
 
+    # TODO: handle disambiguation
+    def algebraic_move(from, to)
+      raise "No piece at #{from}!" unless piece = board[from]
+
+      String.build do |s|
+        case piece
+        when Pawn
+          s << Util.file from if board[to]
+        else
+          # TODO: always capital
+          piece.inspect s
+        end
+
+        s << 'x' if board[to]
+        s << Util.to_algebraic to
+
+        g = sim(from, to).ply
+        if g.check?
+          s << '+'
+        elsif g.checkmate?
+          s << '#'
+        end
+      end
+    end
+
     def draw
       @board.each_slice 8 do |row|
         p row
