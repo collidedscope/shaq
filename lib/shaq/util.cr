@@ -23,8 +23,8 @@ module Shaq::Util
   def from_algebraic(square)
     raise "Invalid square: #{square}" unless square.match /^[a-h][1-8]$/
 
-    rank, file = square.chars
-    ('8' - file) * 8 + (rank - 'a')
+    file, rank = square.chars
+    ('8' - rank) * 8 + (file - 'a')
   end
 
   def traverse(board, piece, heading)
