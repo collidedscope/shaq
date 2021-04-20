@@ -49,7 +49,7 @@ module Shaq
           raise "Illegal move (#{from}->#{to})"
         end
         ply if checked
-        tap { board[from], board[to] = nil, piece.tap &.position= to }
+        tap { board[from], board[to] = nil, piece.tap &.position = to }
       else
         raise "No piece at #{from}!"
       end
