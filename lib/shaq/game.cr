@@ -39,6 +39,12 @@ module Shaq
       piece.moves(self).reject { |square| sim(piece.position, square).check? }
     end
 
+    def legal_moves
+      friends.flat_map { |piece|
+        legal_moves_for(piece).map { |move| {piece.position, move} }
+      }
+    end
+
     def ply
       tap { @turn = turn == Side::Black ? Side::White : Side::Black }
     end
