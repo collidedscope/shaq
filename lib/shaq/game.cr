@@ -110,10 +110,10 @@ module Shaq
         s << Util.to_algebraic to
 
         g = sim(from, to).ply
-        if g.check?
-          s << '+'
-        elsif g.checkmate?
+        if g.checkmate?
           s << '#'
+        elsif g.check?
+          s << '+'
         end
       end
     end
