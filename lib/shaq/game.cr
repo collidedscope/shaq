@@ -58,7 +58,7 @@ module Shaq
     def check?
       pieces = board.select Piece
       if king = pieces.find { |piece| piece.is_a? King && piece.side == turn }
-        vision = pieces.select(&->king.enemy?(Piece)).flat_map &.vision self
+        vision = enemies.flat_map &.vision self
         vision.includes? king.position
       else
         raise "No #{turn} King?!"
@@ -72,13 +72,21 @@ module Shaq
       king = pieces.find { |piece| piece.is_a? King && piece.side == turn }.not_nil!
       return false unless legal_moves_for(king).empty?
 
-      pieces.select(&.side.== turn).each do |ally|
+      friends.each do |ally|
         legal_moves_for(ally).each do |square|
           return false unless sim(ally.position, square).check?
         end
       end
 
       true
+    end
+
+    def friends
+      board.select(Piece).select &.side.== turn
+    end
+
+    def enemies
+      board.select(Piece).select &.side.!= turn
     end
 
     def clone
