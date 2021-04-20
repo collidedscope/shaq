@@ -1,15 +1,13 @@
 require "shaq"
 
 def mate_in_one(game)
-  game.legal_moves.each do |from, to|
-    if game.sim(from, to).ply.checkmate?
-      puts game.algebraic_move from, to
-    end
+  if mate = game.legal_moves.find { |move| game.sim(*move).ply.checkmate? }
+    game.algebraic_move *mate
   end
 end
 
 print "FEN: "
 if fen = gets
-  puts "Mates in one:"
-  mate_in_one Shaq::Game.from_fen fen
+  game = Shaq::Game.from_fen fen
+  puts "Mate in one:", mate_in_one game
 end
