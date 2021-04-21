@@ -8,9 +8,14 @@ module Shaq
       castling : String,
       ep_target : String,
       hm_clock : Int32,
-      move : Int32
+      move : Int32,
+      tags = {} of String => String
 
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
+    end
+
+    def add_tag(key, value)
+      tags[key] = value
     end
 
     def self.from_fen(fen)
