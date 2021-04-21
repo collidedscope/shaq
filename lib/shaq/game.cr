@@ -32,6 +32,32 @@ module Shaq
       new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
     end
 
+    def self.from_pgn(pgn)
+      from_pgn_io IO::Memory.new pgn
+    end
+
+    def self.from_pgn_io(io)
+      game = new
+
+      while line = io.gets
+        case line
+        when /\[(\S+) "(.+?)"\]/
+          game.add_tag $1, $2
+        else
+          line.scan /\d+\. (\S+) (\S+)/ do |(_, white, black)|
+            game.ply white
+            game.ply black unless black['-']?
+          end
+        end
+      end
+
+      game
+    end
+
+    def self.from_pgn_file(path)
+      File.open(path) { |f| from_pgn_io f }
+    end
+
     def self.new
       from_fen START
     end
@@ -64,6 +90,10 @@ module Shaq
       else
         raise "No piece at #{from}!"
       end
+    end
+
+    def ply(san)
+      # TODO: Parse SAN moves
     end
 
     def check?
