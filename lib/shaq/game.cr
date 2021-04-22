@@ -45,7 +45,7 @@ module Shaq
           else
             line.scan /\d+\. (\S+) (\S+)/ do |(_, white, black)|
               game.ply white
-              game.ply black unless black['-']?
+              game.ply black unless black[/\d-/]?
             end
           end
         end
