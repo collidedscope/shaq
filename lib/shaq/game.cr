@@ -95,8 +95,7 @@ module Shaq
     end
 
     def check?
-      pieces = board.select Piece
-      if king = pieces.find { |piece| piece.is_a? King && piece.side == turn }
+      if king = friends.find &.is_a? King
         vision = enemies.flat_map &.vision self
         vision.includes? king.position
       else
@@ -106,9 +105,8 @@ module Shaq
 
     def checkmate?
       return false unless check?
-      pieces = board.select Piece
 
-      king = pieces.find { |piece| piece.is_a? King && piece.side == turn }.not_nil!
+      king = friends.find(&.is_a? King).not_nil!
       return false unless legal_moves_for(king).empty?
 
       friends.each do |ally|
