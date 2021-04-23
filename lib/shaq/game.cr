@@ -1,6 +1,7 @@
 module Shaq
   class Game
-    START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    START  = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    PIECES = {R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
 
     property \
       board : Array(Piece?),
@@ -98,8 +99,31 @@ module Shaq
       end
     end
 
+    # TODO: Handle castling and promotion.
     def ply(san)
-      # TODO: Parse SAN moves
+      rank = file = nil
+
+      if square = san[/^([a-h][1-8])/]?
+        piece = friends.select(Pawn).find { |p| can_move? p, square }
+      elsif move = san.match /(.+?)x?([a-h][1-8])/
+        _, mover, square = move
+        type = PIECES[mover[0, 1]]? || Pawn
+        # TODO: Figure out why friends.select(type) doesn't work.
+
+        candidates = friends.select &.class.== type
+        if rank = mover[/[1-8]/]?
+          candidates.select! &.rank.== rank.to_i
+        end
+        if file = mover[/[a-h]/]?
+          candidates.select! &.file.== file[0]
+        end
+
+        piece = candidates.find { |c| can_move? c, square }
+      end
+
+      raise "Weird move: #{san}" unless piece && square
+
+      ply piece.position, Util.from_algebraic square
     end
 
     def check?
