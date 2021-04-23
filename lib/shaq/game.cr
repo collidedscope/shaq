@@ -74,13 +74,21 @@ module Shaq
       }
     end
 
+    def can_move?(piece, square)
+      legal_moves_for(piece).includes? square
+    end
+
+    def can_move?(piece, square : String)
+      can_move? piece, Util.from_algebraic square
+    end
+
     def ply
       tap { @turn = turn == Side::Black ? Side::White : Side::Black }
     end
 
     def ply(from, to, checked = true)
       if piece = board[from]
-        unless !checked || legal_moves_for(piece).includes? to
+        unless !checked || can_move?(piece, to)
           raise "Illegal move (#{from}->#{to})"
         end
         ply if checked
