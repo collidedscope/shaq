@@ -18,6 +18,14 @@ module Shaq
       vision(game).reject { |square| friend? game.board[square] }
     end
 
+    def rank
+      Util.rank position
+    end
+
+    def file
+      Util.file position
+    end
+
     def self.from_letter(c : Char)
       case c
       when 'p', 'P'; Pawn
