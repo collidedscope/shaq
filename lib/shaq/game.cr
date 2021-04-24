@@ -111,12 +111,8 @@ module Shaq
         # TODO: Figure out why friends.select(type) doesn't work.
 
         candidates = friends.select &.class.== type
-        if rank = mover[/[1-8]/]?
-          candidates.select! &.rank.== rank.to_i
-        end
-        if file = mover[/[a-h]/]?
-          candidates.select! &.file.== file[0]
-        end
+        candidates.select! &.rank.== rank.to_i if rank = mover[/[1-8]/]?
+        candidates.select! &.file.== file[0] if file = mover[/[a-h]/]?
 
         piece = candidates.find { |c| can_move? c, square }
       end
