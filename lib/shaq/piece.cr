@@ -50,7 +50,9 @@ module Shaq
 
       if !game.board[position + once]
         moves << position + once
-        moves << position + twice unless game.board[position + twice] || moved?
+        if !game.board[position + twice] && rank == PAWN_RANKS[side]
+          moves << position + twice
+        end
       end
 
       moves

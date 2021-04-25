@@ -2,6 +2,8 @@ module Shaq
   enum Side
     Black; White
   end
+
+  PAWN_RANKS = {Side::White => 2, Side::Black => 7}
 end
 
 require "shaq/util"
