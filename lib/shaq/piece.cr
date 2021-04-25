@@ -39,8 +39,6 @@ module Shaq
   end
 
   class Pawn < Piece
-    property? moved = false
-
     def vision(game)
       (side == Side::White ? [-9, -7] : [7, 9]).map(&.+ position)
         .reject { |square| Util.teleport? position, square }
@@ -60,8 +58,6 @@ module Shaq
   end
 
   class Rook < Piece
-    property? moved = false
-
     def vision(game)
       [-8, -1, 1, 8].flat_map { |heading| Util.traverse game.board, self, heading }
     end
@@ -90,8 +86,6 @@ module Shaq
   end
 
   class King < Piece
-    property? moved = false
-
     def vision(game)
       ROYAL.map(&.+ position).reject { |square|
         square < 0 || square > 63 || Util.teleport? position, square
