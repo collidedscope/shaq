@@ -89,16 +89,16 @@ module Shaq
       tap { @turn = turn == Side::Black ? Side::White : Side::Black }
     end
 
-    def ply(from, to, checked = true)
-      if piece = board[from]
-        unless !checked || can_move?(piece, to)
-          raise "Illegal move (#{from}->#{to})"
-        end
-        ply if checked
-        tap { board[from], board[to] = nil, piece.tap &.position = to }
-      else
-        raise "No piece at #{from}!"
+    def ply(from, to, real = true)
+      raise "No piece at #{from}!" unless piece = board[from]
+      raise "Illegal move (#{from}->#{to})" unless !real || can_move? piece, to
+
+      if real
+        history << algebraic_move from, to
+        ply
       end
+
+      tap { board[from], board[to] = nil, piece.tap &.position = to }
     end
 
     # TODO: Handle castling and promotion.
