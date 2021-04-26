@@ -196,7 +196,7 @@ module Shaq
         s << LETTERS[piece.class]
         candidates = friends piece.class
         candidates.select! { |c| legal_moves_for(c).includes? target }
-        break if candidates.size == 1
+        next if candidates.size == 1
 
         if candidates.count(&.file.== piece.file) == 1
           s << piece.file
