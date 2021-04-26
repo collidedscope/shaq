@@ -1,7 +1,8 @@
 module Shaq
   class Game
-    START  = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    PIECES = {R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
+    START   = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    PIECES  = {R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
+    LETTERS = PIECES.to_h.invert
 
     property \
       board : Array(Piece?),
@@ -166,7 +167,7 @@ module Shaq
       dup.tap &.board = board.map &.dup
     end
 
-    # TODO: handle disambiguation
+    # TODO: Handle castling and promotion.
     def algebraic_move(from, to)
       raise "No piece at #{from}!" unless piece = board[from]
 
@@ -175,8 +176,7 @@ module Shaq
         when Pawn
           s << Util.file from if board[to]
         else
-          # TODO: always capital
-          piece.inspect s
+          s << algebraic_piece piece, to
         end
 
         s << 'x' if board[to]
@@ -187,6 +187,23 @@ module Shaq
           s << '#'
         elsif g.check?
           s << '+'
+        end
+      end
+    end
+
+    def algebraic_piece(piece, target)
+      String.build do |s|
+        s << LETTERS[piece.class]
+        candidates = friends piece.class
+        candidates.select! { |c| legal_moves_for(c).includes? target }
+        break if candidates.size == 1
+
+        if candidates.count(&.file.== piece.file) == 1
+          s << piece.file
+        elsif candidates.count(&.rank.== piece.rank) == 1
+          s << piece.rank
+        else
+          s << piece.file << piece.rank
         end
       end
     end
