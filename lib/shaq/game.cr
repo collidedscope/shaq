@@ -125,7 +125,7 @@ module Shaq
     end
 
     def check?
-      if king = friends.find &.is_a? King
+      if king = friends.find &.king?
         vision = enemies.flat_map &.vision self
         vision.includes? king.position
       else
@@ -136,7 +136,7 @@ module Shaq
     def checkmate?
       return false unless check?
 
-      king = friends.find(&.is_a? King).not_nil!
+      king = friends.find(&.king?).not_nil!
       return false unless legal_moves_for(king).empty?
 
       friends.each do |ally|

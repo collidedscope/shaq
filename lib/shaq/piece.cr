@@ -26,6 +26,12 @@ module Shaq
       Util.file position
     end
 
+    {% for piece in %w[Pawn Rook Knight Bishop Queen King] %}
+      def {{piece.downcase.id}}?
+        is_a? {{piece.id}}
+      end
+    {% end %}
+
     def self.from_letter(c : Char)
       case c
       when 'p', 'P'; Pawn
