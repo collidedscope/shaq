@@ -86,7 +86,7 @@ module Shaq
     end
 
     def ply
-      tap { @turn = turn == Side::Black ? Side::White : Side::Black }
+      tap { @turn = other_side }
     end
 
     def ply(from, to, real = true)
@@ -146,6 +146,10 @@ module Shaq
       end
 
       true
+    end
+
+    def other_side
+      turn == Side::Black ? Side::White : Side::Black
     end
 
     def friends
