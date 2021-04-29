@@ -93,6 +93,11 @@ module Shaq
       raise "No piece at #{from}!" unless piece = board[from]
       raise "Illegal move (#{from}->#{to})" unless !real || can_move? piece, to
 
+      if piece.pawn? && Util.rank(to % 64) == BACK_RANKS[other_side]
+        promo, to = to.divmod 64
+        piece = {Queen, Knight, Rook, Bishop}[promo].new turn
+      end
+
       if real
         history << algebraic_move from, to
         ply

@@ -3,6 +3,7 @@ module Shaq
     Black; White
   end
 
+  BACK_RANKS = {Side::White => 1, Side::Black => 8}
   PAWN_RANKS = {Side::White => 2, Side::Black => 7}
 end
 
