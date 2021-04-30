@@ -63,7 +63,7 @@ module Shaq
 
       moves.flat_map { |square|
         if Util.rank(square) == BACK_RANKS[game.other_side]
-          Array.new(4) { |i| i * 64 + square }
+          Array.new(4) { |i| i << 6 | square }
         else
           square
         end
