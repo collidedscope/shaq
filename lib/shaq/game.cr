@@ -99,7 +99,7 @@ module Shaq
       end
 
       if real
-        history << algebraic_move from, to
+        history << algebraic_move from, (promo || 0) << 6 | to
         ply
       end
 
@@ -183,6 +183,9 @@ module Shaq
     def algebraic_move(from, to)
       raise "No piece at #{from}!" unless piece = board[from]
 
+      promoting = to >= 64
+      promo, to = to.divmod 64
+
       String.build do |s|
         case piece
         when Pawn
@@ -193,8 +196,9 @@ module Shaq
 
         s << 'x' if board[to]
         s << Util.to_algebraic to
+        s << '=' << "QNRB"[promo] if promoting
 
-        g = sim(from, to).ply
+        g = sim(from, promo << 6 | to).ply
         if g.checkmate?
           s << '#'
         elsif g.check?
