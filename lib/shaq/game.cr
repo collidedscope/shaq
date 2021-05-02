@@ -126,7 +126,9 @@ module Shaq
 
       raise "Weird move: #{san}" unless piece && square
 
-      ply piece.position, Util.from_algebraic square
+      target = Util.from_algebraic square
+      target |= "QNRB".index($1).not_nil! << 6 if san.match(/=([QNRB])/)
+      ply piece.position, target
     end
 
     def check?
