@@ -124,7 +124,7 @@ module Shaq
         piece = candidates.find { |c| can_move? c, square }
       end
 
-      raise "Weird move: #{san}" unless piece && square
+      raise "Invalid or illegal move: #{san}" unless piece && square
 
       target = Util.from_algebraic square
       target |= "QNRB".index($1).not_nil! << 6 if san.match(/=([QNRB])/)
