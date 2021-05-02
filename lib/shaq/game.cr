@@ -106,7 +106,7 @@ module Shaq
       tap { board[from], board[to] = nil, piece.tap &.position = to }
     end
 
-    # TODO: Handle castling and promotion.
+    # TODO: Handle castling.
     def ply(san)
       rank = file = nil
 
@@ -179,7 +179,7 @@ module Shaq
       dup.tap &.board = board.map &.dup
     end
 
-    # TODO: Handle castling and promotion.
+    # TODO: Handle castling.
     def algebraic_move(from, to)
       raise "No piece at #{from}!" unless piece = board[from]
 
