@@ -21,7 +21,7 @@ module Shaq::Util
   end
 
   def from_algebraic(square)
-    raise "Invalid square: #{square}" unless square.match /^[a-h][1-8]$/
+    raise "Invalid square: #{square}" unless square.match /^#{SQUARE}$/
 
     file, rank = square.chars
     ('8' - rank) * 8 + (file - 'a')

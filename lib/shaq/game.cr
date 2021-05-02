@@ -110,9 +110,9 @@ module Shaq
     def ply(san)
       rank = file = nil
 
-      if square = san[/^([a-h][1-8])/]?
+      if square = san[/^(#{SQUARE})/]?
         piece = friends(Pawn).find { |p| can_move? p, square }
-      elsif move = san.match /(.+?)x?([a-h][1-8])/
+      elsif move = san.match /(.+?)x?(#{SQUARE})/
         _, mover, square = move
         type = PIECES[mover[0, 1]]? || Pawn
         # TODO: Figure out why friends.select(type) doesn't work.
