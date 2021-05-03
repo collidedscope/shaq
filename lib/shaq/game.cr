@@ -50,7 +50,7 @@ module Shaq
 
     def ply(from, to, real = true)
       raise "No piece at #{from}!" unless piece = board[from]
-      raise "Illegal move (#{from}->#{to})" unless !real || can_move? piece, to
+      raise "Illegal move: #{from}->#{to}" unless !real || can_move? piece, to
 
       if piece.pawn? && Util.rank(to % 64) == BACK_RANKS[other_side]
         promo, to = to.divmod 64
