@@ -1,6 +1,7 @@
 module Shaq
   class Game
     START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    TURN  = /\d+\.\s+(\S+)\s+(\S+)/
 
     def self.from_fen(fen)
       ranks, turn, castling, ep_target, hm_clock, move = fen.split
@@ -28,7 +29,8 @@ module Shaq
           when /\[(\S+) "(.+?)"\]/
             game.add_tag $1, $2
           else
-            line.scan /\d+\. (\S+) (\S+)/ do |(_, white, black)|
+            # TODO: Preserve commentary?
+            line.gsub(/{.+?}/, "").scan TURN do |(_, white, black)|
               game.ply white
               game.ply black unless black[/\d-/]?
             end
