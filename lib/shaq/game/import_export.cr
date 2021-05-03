@@ -44,5 +44,19 @@ module Shaq
     def add_tag(key, value)
       tags[key] = value
     end
+
+    def to_pgn
+      String.build do |s|
+        tags.each do |key, value|
+          s.puts %([#{key} "#{value}"])
+        end
+
+        s << '\n' unless tags.empty?
+
+        s.puts history.each_slice(2).map_with_index(1) { |move, i|
+          "#{i}. #{move.join ' '}"
+        }.join ' '
+      end
+    end
   end
 end
