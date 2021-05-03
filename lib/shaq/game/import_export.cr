@@ -13,7 +13,8 @@ module Shaq
       }
       turn = {b: Side::Black, w: Side::White}[turn]
 
-      new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
+      game = new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
+      game.tap &.add_tag "FEN", fen
     end
 
     def self.from_pgn(pgn)
