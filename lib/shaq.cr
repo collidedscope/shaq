@@ -17,6 +17,14 @@ module Shaq
 
     games
   end
+
+  def self.load_pgn(path)
+    File.open path do |io|
+      while game = Game.from_pgn_io io
+        yield game
+      end
+    end
+  end
 end
 
 require "shaq/util"
