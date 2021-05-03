@@ -23,6 +23,8 @@ module Shaq
     end
 
     def self.from_pgn_io(io)
+      return nil unless io.peek.try &.first?
+
       new.tap do |game|
         while line = io.gets
           case line
@@ -34,6 +36,8 @@ module Shaq
               game.ply white
               game.ply black unless black[/\d-/]?
             end
+
+            break if io.peek.try &.first? == 91
           end
         end
       end
