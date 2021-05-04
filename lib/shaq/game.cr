@@ -135,6 +135,10 @@ module Shaq
       board.select Piece
     end
 
+    def pieces(side)
+      pieces.select(&.side.== side).reject &.king?
+    end
+
     def friends
       pieces.select &.side.== turn
     end
