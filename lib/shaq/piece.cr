@@ -14,6 +14,14 @@ module Shaq
       other.try &.side.!= side
     end
 
+    def black?
+      side == Side::Black
+    end
+
+    def white?
+      !black?
+    end
+
     def moves(game)
       vision(game).reject { |square| friend? game.board[square] }
     end
