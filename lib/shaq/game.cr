@@ -131,8 +131,12 @@ module Shaq
       turn == Side::Black ? Side::White : Side::Black
     end
 
+    def pieces
+      board.select Piece
+    end
+
     def friends
-      board.select(Piece).select &.side.== turn
+      pieces.select &.side.== turn
     end
 
     def friends(piece)
@@ -140,7 +144,7 @@ module Shaq
     end
 
     def enemies
-      board.select(Piece).select &.side.!= turn
+      pieces.select &.side.!= turn
     end
 
     def enemies(piece)
