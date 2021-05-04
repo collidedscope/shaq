@@ -91,12 +91,8 @@ module Shaq
     end
 
     def check?
-      if king = friends.find &.king?
-        vision = enemies.flat_map &.vision self
-        vision.includes? king.position
-      else
-        raise "No #{turn} King?!"
-      end
+      raise "No #{turn} King?!" unless king = friends.find &.king?
+      enemies.flat_map(&.vision self).includes? king.position
     end
 
     def checkmate?
