@@ -61,6 +61,10 @@ module Shaq
         end
       end
 
+      if ep = game.ep_target
+        moves << ep if vision(game).includes? ep
+      end
+
       return moves if Util.rank(position) != PAWN_RANKS[game.other_side]
       moves.flat_map { |move| Array.new(4) { |i| i << 6 | move } }
     end
