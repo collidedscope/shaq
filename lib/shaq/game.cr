@@ -82,10 +82,8 @@ module Shaq
         piece = friends(Pawn).find { |p| can_move? p, square }
       elsif move = san.match /(.+?)x?([a-h][1-8])/
         _, mover, square = move
-        type = PIECES[mover[0, 1]]? || Pawn
-        # TODO: Figure out why friends.select(type) doesn't work.
 
-        candidates = friends(type)
+        candidates = friends PIECES[mover[0, 1]]? || Pawn
         candidates.select! &.rank.== rank.to_i if rank = mover[/[1-8]/]?
         candidates.select! &.file.== file[0] if file = mover[/[a-h]/]?
 
