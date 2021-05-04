@@ -110,6 +110,14 @@ module Shaq
       true
     end
 
+    def black?
+      turn == Side::Black
+    end
+
+    def white?
+      !black?
+    end
+
     def other_side
       turn == Side::Black ? Side::White : Side::Black
     end
