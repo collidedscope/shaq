@@ -52,6 +52,7 @@ module Shaq
       raise "No piece at #{from}!" unless piece = board[from]
       raise "Illegal move: #{from}->#{to}" unless !real || can_move? piece, to
 
+      board[to + (white? ? 8 : -8)] = nil if piece.pawn? && to == @ep_target
       @ep_target = nil
 
       if piece.pawn?
