@@ -1,4 +1,5 @@
 require "shaq/game/algebraic"
+require "shaq/game/draw"
 require "shaq/game/import_export"
 
 module Shaq
@@ -148,12 +149,6 @@ module Shaq
 
     def clone
       dup.tap &.board = board.map &.dup
-    end
-
-    def draw
-      @board.each_slice 8 do |row|
-        p row
-      end
     end
   end
 end
