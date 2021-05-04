@@ -4,7 +4,7 @@ module Shaq
     TURN  = /\d+\.\s+(\S+)\s+(\S+)/
 
     def self.from_fen(fen)
-      ranks, turn, castling, ep_target, hm_clock, move = fen.split
+      ranks, turn, castling, ep, hm_clock, move = fen.split
 
       board = ranks
         .delete('/')
@@ -14,6 +14,7 @@ module Shaq
       }
       turn = {b: Side::Black, w: Side::White}[turn]
 
+      ep_target = Util.from_algebraic ep if ep != "-"
       game = new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
       game.tap { |g| g.add_tag "FEN", fen unless fen == START }
     end

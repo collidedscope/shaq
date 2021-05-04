@@ -9,7 +9,7 @@ module Shaq
       board : Array(Piece?),
       turn : Side,
       castling : String,
-      ep_target : String,
+      ep_target : Int32?,
       hm_clock : Int32,
       move : Int32,
       history = [] of String,
