@@ -16,6 +16,7 @@ module Shaq
       move : Int32,
       initial_move : Int32,
       history = [] of String,
+      positions = Hash(String, Int32).new(0),
       tags = {} of String => String
 
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
@@ -77,6 +78,9 @@ module Shaq
         @hm_clock = irreversible ? 0 : hm_clock + 1
         @move += 1 if black?
         ply
+
+        # TODO: take other factors into account (castling, en passant, turn)
+        positions[Util.fenalize board] += 1 unless irreversible
       end
 
       tap { board[from], board[to] = nil, piece.tap &.position = to }
