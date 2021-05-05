@@ -1,4 +1,12 @@
 class Shaq::Game
+  def clone
+    dup.tap &.board = board.map &.dup
+  end
+
+  def sim(from, to)
+    clone.ply from, to, false
+  end
+
   def legal_moves_for(piece) : Array(Int32)
     piece.moves(self).reject { |square| sim(piece.position, square).check? }
   end

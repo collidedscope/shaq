@@ -24,13 +24,5 @@ module Shaq
     def self.new
       from_fen START
     end
-
-    def sim(from, to)
-      clone.ply from, to, false
-    end
-
-    def clone
-      dup.tap &.board = board.map &.dup
-    end
   end
 end
