@@ -1,4 +1,6 @@
 class Shaq::Game
+  VALUES = {Queen => 9, Rook => 5, Bishop => 3, Knight => 3, Pawn => 1}
+
   alias PieceType = (Queen | Rook | Bishop | Knight | Pawn).class
   alias Material = Hash(PieceType, Int32)
 
