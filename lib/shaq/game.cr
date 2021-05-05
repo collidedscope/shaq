@@ -1,10 +1,4 @@
-require "shaq/game/algebraic"
-require "shaq/game/draw"
-require "shaq/game/import_export"
-require "shaq/game/material"
-require "shaq/game/moves"
-require "shaq/game/pieces"
-require "shaq/game/status"
+require "shaq/game/*"
 
 module Shaq
   class Game
