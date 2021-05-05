@@ -28,7 +28,7 @@ module Shaq
       clone.ply from, to, false
     end
 
-    def legal_moves_for(piece)
+    def legal_moves_for(piece) : Array(Int32)
       piece.moves(self).reject { |square| sim(piece.position, square).check? }
     end
 
@@ -103,18 +103,7 @@ module Shaq
     end
 
     def checkmate?
-      return false unless check?
-
-      king = friends.find(&.king?).not_nil!
-      return false unless legal_moves_for(king).empty?
-
-      friends.each do |ally|
-        legal_moves_for(ally).each do |square|
-          return false unless sim(ally.position, square).check?
-        end
-      end
-
-      true
+      check? && legal_moves.empty?
     end
 
     def black?
