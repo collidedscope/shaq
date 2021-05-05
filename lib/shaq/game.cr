@@ -3,6 +3,7 @@ require "shaq/game/draw"
 require "shaq/game/import_export"
 require "shaq/game/material"
 require "shaq/game/moves"
+require "shaq/game/pieces"
 require "shaq/game/status"
 
 module Shaq
@@ -32,26 +33,6 @@ module Shaq
 
     def sim(from, to)
       clone.ply from, to, false
-    end
-
-    def pieces
-      board.select Piece
-    end
-
-    def friends
-      pieces.select &.side.== turn
-    end
-
-    def friends(piece)
-      friends.select &.class.== piece
-    end
-
-    def enemies
-      pieces.select &.side.!= turn
-    end
-
-    def enemies(piece)
-      enemies.select &.class.== piece
     end
 
     def occupancy
