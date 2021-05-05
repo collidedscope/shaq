@@ -2,6 +2,7 @@ require "shaq/game/algebraic"
 require "shaq/game/draw"
 require "shaq/game/import_export"
 require "shaq/game/material"
+require "shaq/game/status"
 
 module Shaq
   class Game
@@ -107,43 +108,6 @@ module Shaq
       target = Util.from_algebraic square
       target |= "QNRB".index($1).not_nil! << 6 if san.match(/=([QNRB])/)
       ply piece.position, target
-    end
-
-    def check?
-      raise "No #{turn} King?!" unless king = friends.find &.king?
-      enemies.flat_map(&.vision self).includes? king.position
-    end
-
-    def checkmate?
-      check? && legal_moves.empty?
-    end
-
-    def stalemate?
-      legal_moves.empty? && !check?
-    end
-
-    def insufficient_material?
-      pieces.all? &.king?
-    end
-
-    def repetition?(n = 3)
-      positions.any? &.[1].>= n
-    end
-
-    def draw?
-      repetition? || stalemate? || insufficient_material? || hm_clock >= 100
-    end
-
-    def over?
-      draw? || checkmate? || stalemate?
-    end
-
-    def black?
-      turn == Side::Black
-    end
-
-    def white?
-      !black?
     end
 
     def other_side
