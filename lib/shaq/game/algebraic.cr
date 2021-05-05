@@ -3,7 +3,7 @@ class Shaq::Game
   def algebraic_move(from, to)
     raise "No piece at #{from}!" unless piece = board[from]
 
-    promoting = to >= 64
+    promoting = piece.pawn? && piece.rank == PAWN_RANKS[other_side]
     promo, to = to.divmod 64
 
     String.build do |s|
