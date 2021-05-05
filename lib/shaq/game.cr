@@ -116,6 +116,10 @@ module Shaq
       legal_moves.empty? && !check?
     end
 
+    def draw?
+      hm_clock >= 100
+    end
+
     def over?
       checkmate? || stalemate?
     end
