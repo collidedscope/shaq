@@ -46,7 +46,7 @@ module Shaq
     end
 
     def self.from_pgn_file(path)
-      File.open(path) { |f| from_pgn_io f }
+      File.open(path) { |f| from_pgn_io f }.not_nil!
     end
 
     def add_tag(key, value)
