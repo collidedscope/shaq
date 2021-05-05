@@ -137,10 +137,12 @@ module Shaq
       }
     end
 
+    def material_value(material)
+      material.sum { |piece, amount| VALUES[piece] * amount }
+    end
+
     def material_value
-      material.transform_values { |tally|
-        tally.sum { |piece, amount| VALUES[piece] * amount }
-      }
+      material.transform_values { |tally| material_value tally }
     end
 
     def friends
