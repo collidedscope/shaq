@@ -18,7 +18,7 @@ class Shaq::Game
   end
 
   def material_value
-    material.transform_values { |tally| material_value tally }
+    material.transform_values &->material_value(Material)
   end
 
   def material_imbalance
