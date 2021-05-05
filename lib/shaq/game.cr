@@ -1,6 +1,7 @@
 require "shaq/game/algebraic"
 require "shaq/game/draw"
 require "shaq/game/import_export"
+require "shaq/game/material"
 
 module Shaq
   class Game
@@ -124,25 +125,6 @@ module Shaq
 
     def pieces
       board.select Piece
-    end
-
-    def material(side)
-      pieces.select(&.side.== side).reject &.king?
-    end
-
-    def material
-      {
-        Side::Black => material(Side::Black).map(&.class).tally,
-        Side::White => material(Side::White).map(&.class).tally,
-      }
-    end
-
-    def material_value(material)
-      material.sum { |piece, amount| VALUES[piece] * amount }
-    end
-
-    def material_value
-      material.transform_values { |tally| material_value tally }
     end
 
     def friends
