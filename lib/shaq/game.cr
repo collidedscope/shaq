@@ -126,7 +126,7 @@ module Shaq
       board.select Piece
     end
 
-    def pieces(side)
+    def material(side)
       pieces.select(&.side.== side).reject &.king?
     end
 
