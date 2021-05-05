@@ -121,7 +121,7 @@ module Shaq
     end
 
     def over?
-      checkmate? || stalemate?
+      draw? || checkmate? || stalemate?
     end
 
     def black?
