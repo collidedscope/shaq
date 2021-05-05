@@ -5,7 +5,7 @@ require "shaq/game/material"
 
 module Shaq
   class Game
-    PIECES = {R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
+    PIECES = {P: Pawn, R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
 
     property \
       board : Array(Piece?),

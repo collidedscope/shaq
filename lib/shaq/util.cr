@@ -40,4 +40,13 @@ module Shaq::Util
 
     squares
   end
+
+  def fenalize(board)
+    board.map { |piece|
+      next '.' unless piece
+
+      letter = Shaq::Game::LETTERS[piece.class].to_s
+      piece.black? ? letter.downcase : letter
+    }.join.scan(/.{8}/).map(&.[0].gsub /\.+/, &.size).join '/'
+  end
 end
