@@ -130,6 +130,13 @@ module Shaq
       pieces.select(&.side.== side).reject &.king?
     end
 
+    def material
+      {
+        Side::Black => pieces(Side::Black).map(&.class).tally,
+        Side::White => pieces(Side::White).map(&.class).tally,
+      }
+    end
+
     def friends
       pieces.select &.side.== turn
     end
