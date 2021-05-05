@@ -68,9 +68,17 @@ module Shaq
 
         s << '\n' unless tags.empty?
 
-        s.puts history.each_slice(2).map_with_index(initial_move) { |move, i|
-          "#{i}. #{move.join ' '}"
-        }.join ' '
+        result = tags["Result"]?
+        result ||= if checkmate?
+                     black? ? "1-0" : "0-1"
+                   elsif draw?
+                     "1/2-1/2"
+                   end
+
+        moves = history.each_slice 2
+        movetext = moves.map_with_index(initial_move) { |move, i| "#{i}. #{move.join ' '}" }
+        moves << result if result
+        s.puts moves.join ' '
       end
     end
   end
