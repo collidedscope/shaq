@@ -159,6 +159,10 @@ module Shaq
       enemies.select &.class.== piece
     end
 
+    def occupancy
+      board.each_with_index.sum { |e, i| (e ? 1u64 : 0u64) << i }
+    end
+
     def clone
       dup.tap &.board = board.map &.dup
     end
