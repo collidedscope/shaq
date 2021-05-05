@@ -14,10 +14,12 @@ module Shaq
       ep_target : Int32?,
       hm_clock : Int32,
       move : Int32,
+      initial_move : Int32,
       history = [] of String,
       tags = {} of String => String
 
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
+      @initial_move = move
     end
 
     def self.new

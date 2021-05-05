@@ -60,7 +60,7 @@ module Shaq
 
         s << '\n' unless tags.empty?
 
-        s.puts history.each_slice(2).map_with_index(1) { |move, i|
+        s.puts history.each_slice(2).map_with_index(initial_move) { |move, i|
           "#{i}. #{move.join ' '}"
         }.join ' '
       end
