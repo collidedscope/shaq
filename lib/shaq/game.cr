@@ -116,6 +116,10 @@ module Shaq
       legal_moves.empty? && !check?
     end
 
+    def insufficient_material?
+      pieces.all? &.king?
+    end
+
     def draw?
       hm_clock >= 100
     end
