@@ -132,8 +132,8 @@ module Shaq
 
     def material
       {
-        Side::Black => pieces(Side::Black).map(&.class).tally,
-        Side::White => pieces(Side::White).map(&.class).tally,
+        Side::Black => material(Side::Black).map(&.class).tally,
+        Side::White => material(Side::White).map(&.class).tally,
       }
     end
 
