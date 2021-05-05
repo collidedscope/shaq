@@ -121,7 +121,7 @@ module Shaq
     end
 
     def draw?
-      hm_clock >= 100
+      stalemate? || insufficient_material? || hm_clock >= 100
     end
 
     def over?
