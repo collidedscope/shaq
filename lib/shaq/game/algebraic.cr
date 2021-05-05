@@ -1,4 +1,6 @@
 class Shaq::Game
+  LETTERS = PIECES.to_h.invert
+
   # TODO: Handle castling.
   def algebraic_move(from, to)
     raise "No piece at #{from}!" unless piece = board[from]

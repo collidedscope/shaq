@@ -4,8 +4,7 @@ require "shaq/game/import_export"
 
 module Shaq
   class Game
-    PIECES  = {R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
-    LETTERS = PIECES.to_h.invert
+    PIECES = {R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
 
     property \
       board : Array(Piece?),
