@@ -51,6 +51,7 @@ module Shaq
     end
 
     def ply(from, to, real = true)
+      raise "Game is over!" if real && over?
       raise "No piece at #{from}!" unless piece = board[from]
       raise "Illegal move: #{from}->#{to}" unless !real || can_move? piece, to
 
@@ -108,6 +109,10 @@ module Shaq
 
     def stalemate?
       legal_moves.empty? && !check?
+    end
+
+    def over?
+      checkmate? || stalemate?
     end
 
     def black?
