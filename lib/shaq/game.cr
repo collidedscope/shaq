@@ -126,6 +126,10 @@ module Shaq
       pieces.all? &.king?
     end
 
+    def repetition?(n = 3)
+      positions.any? &.[1].>= n
+    end
+
     def draw?
       stalemate? || insufficient_material? || hm_clock >= 100
     end
