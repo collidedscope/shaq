@@ -7,6 +7,10 @@ class Shaq::Game
     !black?
   end
 
+  def other_side
+    black? ? Side::White : Side::Black
+  end
+
   def check?
     raise "No #{turn} King?!" unless king = friends.find &.king?
     enemies.flat_map(&.vision self).includes? king.position

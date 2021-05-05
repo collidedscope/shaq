@@ -110,10 +110,6 @@ module Shaq
       ply piece.position, target
     end
 
-    def other_side
-      turn == Side::Black ? Side::White : Side::Black
-    end
-
     def pieces
       board.select Piece
     end
