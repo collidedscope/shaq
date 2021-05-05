@@ -39,7 +39,7 @@ module Shaq
               game.ply black unless black[/\d-/]?
             end
 
-            break if io.peek.try &.first? == 91
+            break if io.peek.try &.first? === '['
           end
         end
       end
