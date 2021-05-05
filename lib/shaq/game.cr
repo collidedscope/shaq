@@ -20,6 +20,7 @@ module Shaq
 
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
       @initial_move = move
+      history << "..." if black?
     end
 
     def self.new
