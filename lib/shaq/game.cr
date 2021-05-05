@@ -106,6 +106,10 @@ module Shaq
       check? && legal_moves.empty?
     end
 
+    def stalemate?
+      legal_moves.empty? && !check?
+    end
+
     def black?
       turn == Side::Black
     end
