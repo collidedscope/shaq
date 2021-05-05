@@ -52,6 +52,13 @@ module Shaq
       tags[key] = value
     end
 
+    def to_fen
+      ranks = Util.fenalize board
+      ep = ep_target ? Util.to_algebraic(ep_target.not_nil!) : '-'
+
+      {ranks, black? ? 'b' : 'w', castling, ep, hm_clock, move}.join ' '
+    end
+
     def to_pgn
       String.build do |s|
         tags.each do |key, value|
