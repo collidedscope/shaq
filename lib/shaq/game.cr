@@ -5,6 +5,7 @@ require "shaq/game/import_export"
 module Shaq
   class Game
     PIECES = {R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
+    VALUES = {Pawn => 1, Knight => 3, Bishop => 3, Rook => 5, Queen => 9}
 
     property \
       board : Array(Piece?),
@@ -133,6 +134,12 @@ module Shaq
       {
         Side::Black => pieces(Side::Black).map(&.class).tally,
         Side::White => pieces(Side::White).map(&.class).tally,
+      }
+    end
+
+    def material_value
+      material.transform_values { |tally|
+        tally.sum { |piece, amount| VALUES[piece] * amount }
       }
     end
 
