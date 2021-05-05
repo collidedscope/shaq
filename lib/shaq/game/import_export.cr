@@ -1,6 +1,7 @@
 module Shaq
   class Game
     START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    FLUFF = /({.+?})|(\(.+?\)( +\d+\.{3})?)/ # commentary and variations
     TURN  = /\d+\.\s+(\S+)\s+(\S+)/
 
     def self.from_fen(fen)
@@ -33,7 +34,7 @@ module Shaq
             game.add_tag $1, $2
           else
             # TODO: Preserve commentary?
-            line.gsub(/{.+?}/, "").scan TURN do |(_, white, black)|
+            line.gsub(FLUFF, "").scan TURN do |(_, white, black)|
               game.ply white
               game.ply black unless black[/\d-/]?
             end
