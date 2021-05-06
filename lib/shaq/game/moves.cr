@@ -46,6 +46,12 @@ class Shaq::Game
       end
     end
 
+    if piece.king? && (from - to).abs == 2
+      castle = {2, 58}.includes?(to) ? LONG_CASTLE : SHORT_CASTLE
+      a, b = castle[turn][:rook]
+      board[a], board[b] = nil, Rook.new(turn).tap &.position = b
+    end
+
     irreversible = piece.pawn? || board[to]
 
     if real
