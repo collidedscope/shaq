@@ -53,11 +53,11 @@ class Shaq::Game
       @hm_clock = irreversible ? 0 : hm_clock + 1
       @move += 1 if black?
       ply
-
-      positions[position] += 1 unless irreversible
     end
 
-    tap { board[from], board[to] = nil, piece.tap &.position = to }
+    board[from], board[to] = nil, piece.tap &.position = to
+    positions[position] += 1 if real unless irreversible
+    self
   end
 
   def ply(piece : Piece, target)
