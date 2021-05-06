@@ -59,6 +59,11 @@ class Shaq::Game
       @hm_clock = irreversible ? 0 : hm_clock + 1
       @move += 1 if black?
       ply
+
+      castling.delete 2 if {0, 4}.includes? from
+      castling.delete 6 if {4, 7}.includes? from
+      castling.delete 58 if {56, 60}.includes? from
+      castling.delete 62 if {60, 63}.includes? from
     end
 
     board[from], board[to] = nil, piece.tap &.position = to
