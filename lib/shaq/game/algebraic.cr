@@ -1,22 +1,23 @@
 class Shaq::Game
   LETTERS = PIECES.to_h.invert
 
-  # TODO: Handle castling.
   def algebraic_move(from, to)
     raise "No piece at #{from}!" unless piece = board[from]
 
     promo, to = to.divmod 64
+    castling = piece.king? && (from - to).abs == 2
 
     String.build do |s|
-      case piece
-      when Pawn
+      if piece.pawn?
         s << Util.file from if board[to]
+      elsif castling
+        s << ({2, 58}.includes?(to) ? "O-O-O" : "O-O")
       else
         s << algebraic_piece piece, to
       end
 
       s << 'x' if board[to]
-      s << Util.to_algebraic to
+      s << Util.to_algebraic to unless castling
       s << '=' << "QNRB"[promo] if piece.promoting?
 
       g = sim(from, promo << 6 | to).ply
