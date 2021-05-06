@@ -35,4 +35,9 @@ class Shaq::Game
 
     imbalance
   end
+
+  def material_advantage(side)
+    imbalance = material_imbalance.transform_values &->material_value(Material)
+    imbalance[side] - imbalance[side.other]
+  end
 end
