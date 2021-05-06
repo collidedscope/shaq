@@ -116,6 +116,22 @@ module Shaq
         square < 0 || square > 63 || Util.teleport? position, square
       }
     end
+
+    def moves(game)
+      moves = super
+      moves << LONG_CASTLE[side][:king] if can_castle? game, LONG_CASTLE
+      moves << SHORT_CASTLE[side][:king] if can_castle? game, SHORT_CASTLE
+      moves
+    end
+
+    def can_castle?(game, distance)
+      return false if game.check?
+      return false unless game.castling.includes? distance[side][:king]
+
+      distance[side][:path].none? { |square|
+        game.board[square] || game.enemy_vision.includes? square
+      }
+    end
   end
 
   {% for piece, offset in [King, Queen, Rook, Bishop, Knight, Pawn] %}
