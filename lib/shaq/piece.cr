@@ -34,6 +34,10 @@ module Shaq
       Util.file position
     end
 
+    def promoting?
+      pawn? && rank == PAWN_RANKS[side.other]
+    end
+
     {% for piece in %w[Pawn Rook Knight Bishop Queen King] %}
       def {{piece.downcase.id}}?
         is_a? {{piece.id}}

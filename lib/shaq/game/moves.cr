@@ -40,7 +40,7 @@ class Shaq::Game
     if piece.pawn?
       @ep_target = to + (white? ? 8 : -8) if (from - to).abs == 16
 
-      if Util.rank(to % 64) == BACK_RANKS[other_side]
+      if piece.promoting?
         promo, to = to.divmod 64
         piece = {Queen, Knight, Rook, Bishop}[promo].new turn
       end

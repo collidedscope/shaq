@@ -5,7 +5,6 @@ class Shaq::Game
   def algebraic_move(from, to)
     raise "No piece at #{from}!" unless piece = board[from]
 
-    promoting = piece.pawn? && piece.rank == PAWN_RANKS[other_side]
     promo, to = to.divmod 64
 
     String.build do |s|
@@ -18,7 +17,7 @@ class Shaq::Game
 
       s << 'x' if board[to]
       s << Util.to_algebraic to
-      s << '=' << "QNRB"[promo] if promoting
+      s << '=' << "QNRB"[promo] if piece.promoting?
 
       g = sim(from, promo << 6 | to).ply
       if g.checkmate?
