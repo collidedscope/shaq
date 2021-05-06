@@ -75,7 +75,6 @@ class Shaq::Game
     ply piece.position, target
   end
 
-  # TODO: Handle castling.
   def ply(san)
     rank = file = nil
 
