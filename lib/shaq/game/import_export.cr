@@ -13,9 +13,14 @@ module Shaq
         .chars.map_with_index { |c, i|
         Piece.from_letter(c).tap &.position = i if c != '.'
       }
+
       turn = {b: Side::Black, w: Side::White}[turn]
 
+      castling_squares = {'K' => 62, 'Q' => 58, 'k' => 6, 'q' => 2}
+      castling = castling.chars.map(&->castling_squares.[]?(Char)).compact
+
       ep_target = Util.from_algebraic ep if ep != "-"
+
       game = new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
       game.tap { |g| g.add_tag "FEN", fen unless fen == START }
     end

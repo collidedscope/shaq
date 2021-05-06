@@ -9,7 +9,7 @@ module Shaq
     property \
       board : Array(Piece?),
       turn : Side,
-      castling : String,
+      castling : Array(Int32),
       ep_target : Int32?,
       hm_clock : Int32,
       move : Int32,
