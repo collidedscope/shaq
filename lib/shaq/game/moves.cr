@@ -54,7 +54,6 @@ class Shaq::Game
       @move += 1 if black?
       ply
 
-      # TODO: take other factors into account (castling, en passant, turn)
       positions[position] += 1 unless irreversible
     end
 
