@@ -2,7 +2,7 @@ require "colorize"
 
 class Shaq::Game
   def draw(dark = 25, light = 69, black = 16, white = 255, flip = false)
-    dark, light, black, white = [dark, light, black, white].map { |color|
+    dark, light, black, white = {dark, light, black, white}.map { |color|
       Colorize::Color256.new color.to_u8
     }
 
