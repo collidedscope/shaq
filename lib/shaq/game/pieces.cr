@@ -18,4 +18,8 @@ class Shaq::Game
   def enemies(piece)
     enemies.select &.class.== piece
   end
+
+  def enemy_vision
+    enemies.flat_map &.vision self
+  end
 end

@@ -13,7 +13,7 @@ class Shaq::Game
 
   def check?
     raise "No #{turn} King?!" unless king = friends.find &.king?
-    enemies.flat_map(&.vision self).includes? king.position
+    enemy_vision.includes? king.position
   end
 
   def checkmate?
