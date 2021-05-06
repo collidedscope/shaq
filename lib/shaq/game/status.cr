@@ -12,7 +12,6 @@ class Shaq::Game
   end
 
   def check?
-    raise "No #{turn} King?!" unless king = friends.find &.king?
     enemy_vision.includes? king.position
   end
 
