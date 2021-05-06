@@ -8,7 +8,7 @@ class Shaq::Game
   end
 
   def other_side
-    black? ? Side::White : Side::Black
+    turn.other
   end
 
   def check?
