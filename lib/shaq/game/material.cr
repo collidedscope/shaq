@@ -5,7 +5,7 @@ class Shaq::Game
   alias Material = Hash(PieceType, Int32)
 
   def material(side)
-    pieces.select(&.side.== side).reject(&.king?).map &.class
+    pieces(side).reject(&.king?).map &.class
   end
 
   def material
