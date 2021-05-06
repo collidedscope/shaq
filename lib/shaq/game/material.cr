@@ -5,14 +5,11 @@ class Shaq::Game
   alias Material = Hash(PieceType, Int32)
 
   def material(side)
-    pieces.select(&.side.== side).reject &.king?
+    pieces.select(&.side.== side).reject(&.king?).map &.class
   end
 
   def material
-    {
-      Side::Black => material(Side::Black).map(&.class).tally,
-      Side::White => material(Side::White).map(&.class).tally,
-    }
+    {Side::Black, Side::White}.map { |side| {side, material(side).tally} }.to_h
   end
 
   def material_value(material)
