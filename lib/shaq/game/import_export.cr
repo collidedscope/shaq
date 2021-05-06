@@ -82,8 +82,8 @@ module Shaq
 
         moves = history.each_slice 2
         movetext = moves.map_with_index(initial_move) { |move, i| "#{i}. #{move.join ' '}" }
-        moves << result if result
-        s.puts moves.join ' '
+        movetext << result if result
+        s.puts movetext.join ' '
       end
     end
   end
