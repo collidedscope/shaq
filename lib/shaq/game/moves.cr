@@ -60,6 +60,10 @@ class Shaq::Game
     tap { board[from], board[to] = nil, piece.tap &.position = to }
   end
 
+  def ply(piece : Piece, target)
+    ply piece.position, target
+  end
+
   # TODO: Handle castling.
   def ply(san)
     rank = file = nil
@@ -80,6 +84,6 @@ class Shaq::Game
 
     target = Util.from_algebraic square
     target |= "QNRB".index($1).not_nil! << 6 if san.match(/=([QNRB])/)
-    ply piece.position, target
+    ply piece, target
   end
 end
