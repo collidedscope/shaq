@@ -70,7 +70,7 @@ class Shaq::Game
 
     if square = san[/^([a-h][1-8])/]?
       piece = friends(Pawn).find { |p| can_move? p, square }
-    elsif move = san.match /(.+?)x?([a-h][1-8])/
+    elsif move = san.match /(.+)x?([a-h][1-8])/
       _, mover, square = move
 
       candidates = friends PIECES[mover[0, 1]]? || Pawn
