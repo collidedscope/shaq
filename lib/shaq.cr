@@ -1,6 +1,11 @@
 module Shaq
   enum Side
-    Black; White
+    Black
+    White
+
+    def other
+      Side.new 1 - to_i
+    end
   end
 
   BACK_RANKS = {Side::White => 1, Side::Black => 8}
