@@ -55,7 +55,7 @@ class Shaq::Game
       ply
 
       # TODO: take other factors into account (castling, en passant, turn)
-      positions[Util.fenalize board] += 1 unless irreversible
+      positions[position] += 1 unless irreversible
     end
 
     tap { board[from], board[to] = nil, piece.tap &.position = to }
