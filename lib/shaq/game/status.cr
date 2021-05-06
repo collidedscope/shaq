@@ -36,7 +36,7 @@ class Shaq::Game
   end
 
   def over?
-    draw? || checkmate? || stalemate?
+    draw? || checkmate?
   end
 
   def position
