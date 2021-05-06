@@ -1,8 +1,6 @@
 module Shaq
   class Game
     START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    FLUFF = /({.+?})|(\(.+?\)( +\d+\.{3})?)/ # commentary and variations
-    TURN  = /\d+\.\s+(\S+)\s+(\S+)/
 
     def self.from_fen(fen)
       ranks, turn, castling, ep, hm_clock, move = fen.split
@@ -39,9 +37,8 @@ module Shaq
             game.add_tag $1, $2
           else
             # TODO: Preserve commentary?
-            line.gsub(FLUFF, "").scan TURN do |(_, white, black)|
-              game.ply white
-              game.ply black unless black[/\d-/]?
+            line.gsub(/({.+?}|(\(.+?\)))/, "").split do |ply|
+              game.ply ply unless ply[0].ascii_number?
             end
 
             break if io.peek.try &.first? === '['
