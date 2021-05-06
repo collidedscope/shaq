@@ -68,6 +68,9 @@ class Shaq::Game
   def ply(san)
     rank = file = nil
 
+    return ply king, LONG_CASTLE[turn][:king] if san["O-O-O"]?
+    return ply king, SHORT_CASTLE[turn][:king] if san["O-O"]?
+
     if square = san[/^([a-h][1-8])/]?
       piece = friends(Pawn).find { |p| can_move? p, square }
     elsif move = san.match /(.+)x?([a-h][1-8])/
