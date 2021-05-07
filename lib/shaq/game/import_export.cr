@@ -1,6 +1,7 @@
 module Shaq
   class Game
     START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    STR   = %w[Event Site Date Round White Black Result]
 
     def self.from_fen(fen)
       ranks, turn, castling, ep, hm_clock, move = fen.split
@@ -66,10 +67,12 @@ module Shaq
       {ranks, black? ? 'b' : 'w', castling, ep, hm_clock, move}.join ' '
     end
 
-    def to_pgn
+    def to_pgn(ignore_spec = false)
+      STR.each { |tag| @tags[tag] ||= "?" } unless ignore_spec
+
       String.build do |s|
-        tags.each do |key, value|
-          s.puts %([#{key} "#{value}"])
+        tags.keys.sort_by { |tag| STR.index(tag) || 1/0 }.each do |tag|
+          s.puts %([#{tag} "#{tags[tag]}"])
         end
 
         s << '\n' unless tags.empty?
