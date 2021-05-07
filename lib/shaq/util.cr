@@ -27,6 +27,22 @@ module Shaq::Util
     ('8' - rank) * 8 + (file - 'a')
   end
 
+  def to_uci(from, to)
+    promoting = to >= 64
+    promo, to = to.divmod 64
+
+    "#{to_algebraic from}#{to_algebraic to}#{"qnrb"[promo] if promoting}"
+  end
+
+  def from_uci(uci)
+    raise "Invalid UCI: #{uci}" unless uci.match /([a-h][1-8]){2}[qnrb]?/
+
+    from, to, promo = uci[0, 2], uci[2, 2], uci[4]?
+    promo = promo ? "qnrb".index(promo).not_nil! : 0
+
+    {from_algebraic(from), promo << 6 | from_algebraic(to)}
+  end
+
   def traverse(board, piece, heading)
     squares = [] of Int32
     position = piece.position
