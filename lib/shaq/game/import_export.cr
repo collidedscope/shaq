@@ -34,7 +34,11 @@ module Shaq
 
       while line = io.gets
         if line.match /\[(\S+) "(.+?)"\]/
-          game.add_tag $1, $2
+          if $1 == "FEN"
+            game = from_fen($2).tap &.tags.merge! game.tags
+          else
+            game.add_tag $1, $2
+          end
         else
           # TODO: Preserve commentary?
           line.gsub(/({.+?}|(\(.+?\)))/, "").split do |ply|
