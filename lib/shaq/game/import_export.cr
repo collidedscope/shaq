@@ -30,21 +30,21 @@ module Shaq
     def self.from_pgn_io(io)
       return nil unless io.peek.try &.first?
 
-      new.tap do |game|
-        while line = io.gets
-          case line
-          when /\[(\S+) "(.+?)"\]/
-            game.add_tag $1, $2
-          else
-            # TODO: Preserve commentary?
-            line.gsub(/({.+?}|(\(.+?\)))/, "").split do |ply|
-              game.ply ply unless ply[0].ascii_number?
-            end
+      game = new
 
-            break if io.peek.try &.first? === '['
+      while line = io.gets
+        if line.match /\[(\S+) "(.+?)"\]/
+          game.add_tag $1, $2
+        else
+          # TODO: Preserve commentary?
+          line.gsub(/({.+?}|(\(.+?\)))/, "").split do |ply|
+            game.ply ply unless ply[0].ascii_number?
           end
+          break if io.peek.try &.first? === '['
         end
       end
+
+      game
     end
 
     def self.from_pgn_file(path)
