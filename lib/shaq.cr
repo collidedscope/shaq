@@ -4,7 +4,7 @@ module Shaq
     White
 
     def other
-      Side.new 1 - to_i
+      Side.new 1 - value
     end
   end
 
