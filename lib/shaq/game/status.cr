@@ -1,11 +1,5 @@
 class Shaq::Game
-  def black?
-    turn == Side::Black
-  end
-
-  def white?
-    !black?
-  end
+  delegate black?, white?, to: turn
 
   def other_side
     turn.other

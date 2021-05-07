@@ -1,6 +1,8 @@
 module Shaq
   abstract class Piece
     property! position : Int32, side : Side
+    delegate black?, white?, to: side
+
     ROYAL = [-9, -8, -7, -1, 1, 7, 8, 9]
 
     def initialize(@side : Side)
@@ -12,14 +14,6 @@ module Shaq
 
     def enemy?(other)
       other.try &.side.!= side
-    end
-
-    def black?
-      side == Side::Black
-    end
-
-    def white?
-      !black?
     end
 
     def moves(game)
