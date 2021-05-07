@@ -129,7 +129,7 @@ module Shaq
       return false unless game.castling.includes? distance[side][:king]
 
       distance[side][:path].none? { |square|
-        game.board[square] || game.enemy_vision.includes? square
+        game.board[square] || game.attacked? square
       }
     end
   end

@@ -27,6 +27,10 @@ class Shaq::Game
     enemies.flat_map &.vision self
   end
 
+  def attacked?(square)
+    enemy_vision.includes? square
+  end
+
   def king
     raise "No #{turn} King?!" unless king = friends.find &.king?
     king
