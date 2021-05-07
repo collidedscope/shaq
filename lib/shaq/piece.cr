@@ -52,13 +52,13 @@ module Shaq
 
   class Pawn < Piece
     def vision(game)
-      (side == Side::White ? [-9, -7] : [7, 9]).map(&.+ position)
+      (white? ? [-9, -7] : [7, 9]).map(&.+ position)
         .reject { |square| Util.teleport? position, square }
     end
 
     def moves(game)
       moves = vision(game).select { |square| enemy? game.board[square] }
-      once, twice = side == Side::White ? [-8, -16] : [8, 16]
+      once, twice = white? ? [-8, -16] : [8, 16]
 
       if !game.board[position + once]
         moves << position + once
