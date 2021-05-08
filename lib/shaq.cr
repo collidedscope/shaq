@@ -8,10 +8,19 @@ module Shaq
     end
   end
 
+  enum Color
+    Dark
+    Light
+  end
+
   enum Square
     {% for i in 0..63 %}
       {{"ABCDEFGH".chars[i % 8].id + "#{8 - i // 8}"}}
     {% end %}
+
+    def color
+      Color.from_value value.divmod(8).sum & 1
+    end
   end
 
   BACK_RANKS = {Side::White => 1, Side::Black => 8}
