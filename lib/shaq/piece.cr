@@ -50,7 +50,7 @@ module Shaq
   class Pawn < Piece
     def vision(game)
       (white? ? [-9, -7] : [7, 9]).map(&.+ position)
-        .reject { |square| Util.teleport? position, square }
+        .reject { |square| Util.out_of_bounds? position, square }
     end
 
     def moves(game)
@@ -84,7 +84,7 @@ module Shaq
 
     def vision(game)
       NEIGHBORS.map(&.+ position).reject { |square|
-        square < 0 || square > 63 || Util.teleport? position, square
+        Util.out_of_bounds? position, square
       }
     end
   end
@@ -104,7 +104,7 @@ module Shaq
   class King < Piece
     def vision(game)
       ROYAL.map(&.+ position).reject { |square|
-        square < 0 || square > 63 || Util.teleport? position, square
+        Util.out_of_bounds? position, square
       }
     end
 
