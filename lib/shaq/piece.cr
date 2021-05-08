@@ -2,6 +2,7 @@ module Shaq
   abstract class Piece
     property! position : Int32, side : Side
     delegate black?, white?, to: side
+    delegate color, rank, file, to: square
 
     ROYAL = [-9, -8, -7, -1, 1, 7, 8, 9]
 
@@ -18,14 +19,6 @@ module Shaq
 
     def moves(game)
       vision(game).reject { |square| friend? game.board[square] }
-    end
-
-    def rank
-      square.rank
-    end
-
-    def file
-      square.file
     end
 
     def square
