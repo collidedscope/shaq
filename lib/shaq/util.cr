@@ -1,5 +1,5 @@
 module Shaq::Util
-  UCI = /([a-h][1-8]){2}[qnrb]?/
+  UCI = /^([a-h][1-8]){2}[qnrb]?/
 
   extend self
 
