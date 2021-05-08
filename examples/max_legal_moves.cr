@@ -19,5 +19,5 @@ Qgh7 Qgh8 Qxh2# Rc2# Rd2# Rd5 Re2# Re5 Rf2# Rf5 Rg3# Rg4# Rg6# Rgg5# Rgxh2# Rh3
 Rh4 Rh6 Rh7 Rh8 Rhg5 Rhxh2#
 EOS
 
-moves = game.legal_moves.map { |m| game.algebraic_move *m }.sort
+moves = game.legal_moves.map { |m| game.algebraic_move *m }.sort!
 p moves == expected
