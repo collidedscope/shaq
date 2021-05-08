@@ -28,6 +28,10 @@ module Shaq
       Util.file position
     end
 
+    def square
+      Square.new position
+    end
+
     def promoting?
       pawn? && rank == PAWN_RANKS[side.other]
     end

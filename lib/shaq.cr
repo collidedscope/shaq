@@ -8,6 +8,12 @@ module Shaq
     end
   end
 
+  enum Square
+    {% for i in 0..63 %}
+      {{"ABCDEFGH".chars[i % 8].id + "#{8 - i // 8}"}}
+    {% end %}
+  end
+
   BACK_RANKS = {Side::White => 1, Side::Black => 8}
   PAWN_RANKS = {Side::White => 2, Side::Black => 7}
 
