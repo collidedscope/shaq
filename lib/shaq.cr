@@ -21,6 +21,14 @@ module Shaq
     def color
       Color.from_value value.divmod(8).sum & 1
     end
+
+    def rank
+      8 - value // 8
+    end
+
+    def file
+      'a' + value % 8
+    end
   end
 
   BACK_RANKS = {Side::White => 1, Side::Black => 8}

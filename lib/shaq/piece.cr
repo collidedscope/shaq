@@ -21,11 +21,11 @@ module Shaq
     end
 
     def rank
-      Util.rank position
+      square.rank
     end
 
     def file
-      Util.file position
+      square.file
     end
 
     def square

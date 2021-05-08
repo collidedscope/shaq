@@ -9,7 +9,7 @@ class Shaq::Game
 
     String.build do |s|
       if piece.pawn?
-        s << Util.file from if board[to]
+        s << Square.new(from).file if board[to]
       elsif castling
         s << ({2, 58}.includes?(to) ? "O-O-O" : "O-O")
       else

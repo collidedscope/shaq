@@ -7,14 +7,6 @@ module Shaq::Util
     (from % 8 - to % 8).abs > 2
   end
 
-  def rank(position)
-    8 - position // 8
-  end
-
-  def file(position)
-    'a' + position % 8
-  end
-
   def to_algebraic(position)
     raise "Invalid position: #{position}" unless (0..63) === position
 
