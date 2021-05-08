@@ -68,11 +68,11 @@ module Shaq
     end
 
     def to_pgn(ignore_spec = false)
-      STR.each { |tag| @tags[tag] ||= "?" } unless ignore_spec
+      STR.each { |tag| @tags[tag] ||= nil } unless ignore_spec
 
       String.build do |s|
         tags.keys.sort_by { |tag| STR.index(tag) || 1/0 }.each do |tag|
-          s.puts %([#{tag} "#{tags[tag]}"])
+          s.puts %([#{tag} "#{tags[tag] || '?'}"])
         end
 
         s << '\n' unless tags.empty?

@@ -16,7 +16,7 @@ module Shaq
       initial_move : Int32,
       history = [] of String,
       positions = Hash(Position, Int32).new(0),
-      tags = {} of String => String
+      tags = {} of String => String?
 
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
       @initial_move = move
