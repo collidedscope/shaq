@@ -3,8 +3,8 @@ module Shaq::Util
 
   extend self
 
-  def out_of_bounds?(from, to)
-    0 <= to <= 63 ? (from % 8 - to % 8).abs > 2 : true
+  def inbounds?(from, to)
+    0 <= to <= 63 && (from % 8 - to % 8).abs < 3
   end
 
   def to_algebraic(position)
@@ -43,7 +43,7 @@ module Shaq::Util
 
     loop do
       target = position + heading
-      break if out_of_bounds? position, target
+      break unless inbounds? position, target
       squares << (position = target)
       break if board[target]
     end
