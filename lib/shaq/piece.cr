@@ -29,6 +29,14 @@ module Shaq
       pawn? && rank == PAWN_RANKS[side.other]
     end
 
+    def reachable?(square)
+      Util.inbounds? position, square
+    end
+
+    def reachable(offsets)
+      offsets.map(&.+ position).select &->reachable?(Int32)
+    end
+
     {% for piece in %w[Pawn Rook Knight Bishop Queen King] %}
       def {{piece.downcase.id}}?
         is_a? {{piece.id}}
@@ -49,8 +57,7 @@ module Shaq
 
   class Pawn < Piece
     def vision(game)
-      (white? ? [-9, -7] : [7, 9]).map(&.+ position)
-        .select { |square| Util.inbounds? position, square }
+      reachable white? ? [-9, -7] : [7, 9]
     end
 
     def moves(game)
@@ -83,7 +90,7 @@ module Shaq
     NEIGHBORS = [-17, -15, -10, -6, 6, 10, 15, 17]
 
     def vision(game)
-      NEIGHBORS.map(&.+ position).select { |square| Util.inbounds? position, square }
+      reachable NEIGHBORS
     end
   end
 
@@ -101,7 +108,7 @@ module Shaq
 
   class King < Piece
     def vision(game)
-      ROYAL.map(&.+ position).select { |square| Util.inbounds? position, square }
+      reachable ROYAL
     end
 
     def moves(game)
