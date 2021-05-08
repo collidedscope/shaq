@@ -51,6 +51,10 @@ module Shaq
       squares
     end
 
+    def slider_vision(game, headings)
+      headings.flat_map { |heading| traverse game.board, heading }
+    end
+
     {% for piece in %w[Pawn Rook Knight Bishop Queen King] %}
       def {{piece.downcase.id}}?
         is_a? {{piece.id}}
@@ -96,7 +100,7 @@ module Shaq
 
   class Rook < Piece
     def vision(game)
-      [-8, -1, 1, 8].flat_map { |heading| traverse game.board, heading }
+      slider_vision game, [-8, -1, 1, 8]
     end
   end
 
@@ -110,13 +114,13 @@ module Shaq
 
   class Bishop < Piece
     def vision(game)
-      [-9, -7, 7, 9].flat_map { |heading| traverse game.board, heading }
+      slider_vision game, [-9, -7, 7, 9]
     end
   end
 
   class Queen < Piece
     def vision(game)
-      ROYAL.flat_map { |heading| traverse game.board, heading }
+      slider_vision game, ROYAL
     end
   end
 
