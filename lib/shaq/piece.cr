@@ -37,6 +37,20 @@ module Shaq
       offsets.map(&.+ position).select &->reachable?(Int32)
     end
 
+    def traverse(board, heading)
+      squares = [] of Int32
+      now = position
+
+      loop do
+        target = now + heading
+        break unless Util.inbounds? now, target
+        squares << (now = target)
+        break if board[now]
+      end
+
+      squares
+    end
+
     {% for piece in %w[Pawn Rook Knight Bishop Queen King] %}
       def {{piece.downcase.id}}?
         is_a? {{piece.id}}
@@ -82,7 +96,7 @@ module Shaq
 
   class Rook < Piece
     def vision(game)
-      [-8, -1, 1, 8].flat_map { |heading| Util.traverse game.board, self, heading }
+      [-8, -1, 1, 8].flat_map { |heading| traverse game.board, heading }
     end
   end
 
@@ -96,13 +110,13 @@ module Shaq
 
   class Bishop < Piece
     def vision(game)
-      [-9, -7, 7, 9].flat_map { |heading| Util.traverse game.board, self, heading }
+      [-9, -7, 7, 9].flat_map { |heading| traverse game.board, heading }
     end
   end
 
   class Queen < Piece
     def vision(game)
-      ROYAL.flat_map { |heading| Util.traverse game.board, self, heading }
+      ROYAL.flat_map { |heading| traverse game.board, heading }
     end
   end
 

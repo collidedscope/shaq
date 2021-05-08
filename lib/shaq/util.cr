@@ -37,20 +37,6 @@ module Shaq::Util
     {from_algebraic(from), promo << 6 | from_algebraic(to)}
   end
 
-  def traverse(board, piece, heading)
-    squares = [] of Int32
-    position = piece.position
-
-    loop do
-      target = position + heading
-      break unless inbounds? position, target
-      squares << (position = target)
-      break if board[target]
-    end
-
-    squares
-  end
-
   def fenalize(board)
     board.map { |piece|
       next '.' unless piece
