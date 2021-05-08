@@ -19,7 +19,7 @@ module Shaq
     {% end %}
 
     def color
-      Color.from_value value.divmod(8).sum & 1
+      Color.new value.divmod(8).sum & 1
     end
 
     def rank
