@@ -32,7 +32,6 @@ class Shaq::Game
   end
 
   def king
-    raise "No #{turn} King?!" unless king = friends.find &.king?
-    king
+    friends.find &.king? || raise "No #{turn} King?!"
   end
 end
