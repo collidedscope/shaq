@@ -4,7 +4,9 @@ module Shaq
     STR   = %w[Event Site Date Round White Black Result]
 
     def self.from_fen(fen)
-      ranks, turn, castling, ep, hm_clock, move = fen.split
+      fields = fen.split
+      raise "Invalid FEN: need exactly 6 fields" unless fields.size == 6
+      ranks, turn, castling, ep, hm_clock, move = fields
 
       board = ranks
         .delete('/')
