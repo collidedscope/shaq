@@ -36,8 +36,4 @@ class Shaq::Game
   def position
     {Util.fenalize(board), turn, castling, ep_target}
   end
-
-  def occupancy
-    board.each_with_index.sum { |e, i| (e ? 1u64 : 0u64) << i }
-  end
 end
