@@ -15,9 +15,7 @@ module Shaq
       board = ranks
         .delete('/')
         .gsub(/(\d)/) { "." * $1.to_i }
-        .chars.map_with_index { |c, i|
-        Piece.from_letter(c).tap &.position = i if c != '.'
-      }
+        .chars.map_with_index &->Piece.from_letter(Char, Int32)
 
       raise "Invalid FEN: need exactly 64 squares" unless board.size == 64
 

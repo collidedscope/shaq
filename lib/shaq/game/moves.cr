@@ -42,14 +42,14 @@ class Shaq::Game
 
       if piece.promoting?
         promo, to = to.divmod 64
-        piece = {Queen, Knight, Rook, Bishop}[promo].new turn
+        piece = {Queen, Knight, Rook, Bishop}[promo].new turn, to
       end
     end
 
     if piece.king? && (from - to).abs == 2
       castle = {2, 58}.includes?(to) ? LONG_CASTLE : SHORT_CASTLE
       a, b = castle[turn][:rook]
-      board[a], board[b] = nil, Rook.new(turn).tap &.position = b
+      board[a], board[b] = nil, Rook.new turn, b
     end
 
     irreversible = piece.pawn? || board[to]

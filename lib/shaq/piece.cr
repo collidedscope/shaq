@@ -1,12 +1,12 @@
 module Shaq
   abstract class Piece
-    property! position : Int32, side : Side
+    property side : Side, position : Int32
     delegate black?, white?, to: side
     delegate color, rank, file, to: square
 
     ROYAL = [-9, -8, -7, -1, 1, 7, 8, 9]
 
-    def initialize(@side : Side)
+    def initialize(@side, @position)
     end
 
     def friend?(other)
@@ -61,15 +61,16 @@ module Shaq
       end
     {% end %}
 
-    def self.from_letter(c : Char)
+    def self.from_letter(c, position)
       case c
       when 'p', 'P'; Pawn
       when 'r', 'R'; Rook
       when 'n', 'N'; Knight
       when 'b', 'B'; Bishop
       when 'q', 'Q'; Queen
-      else           King
-      end.new c.ascii_lowercase? ? Side::Black : Side::White
+      when 'k', 'K'; King
+      else           return nil
+      end.new c.ascii_lowercase? ? Side::Black : Side::White, position
     end
   end
 
