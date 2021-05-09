@@ -8,12 +8,18 @@ module Shaq
       raise "Invalid FEN: need exactly 6 fields" unless fields.size == 6
       ranks, turn, castling, ep, hm_clock, move = fields
 
+      if bad = ranks.chars.find &.in_set? "^PRNBQKprnbqk/1-8"
+        raise "Invalid FEN: '#{bad}' in ranks"
+      end
+
       board = ranks
         .delete('/')
         .gsub(/(\d)/) { "." * $1.to_i }
         .chars.map_with_index { |c, i|
         Piece.from_letter(c).tap &.position = i if c != '.'
       }
+
+      raise "Invalid FEN: need exactly 64 squares" unless board.size == 64
 
       turn = {b: Side::Black, w: Side::White}[turn]
 
