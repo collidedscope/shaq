@@ -101,4 +101,8 @@ class Shaq::Game
     target |= "QNRB".index($1).not_nil! << 6 if san.match(/=([QNRB])/)
     ply piece, target
   end
+
+  def ply(moves : Array(String))
+    moves.each &->ply(String)
+  end
 end
