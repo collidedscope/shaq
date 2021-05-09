@@ -105,6 +105,6 @@ class Shaq::Game
   end
 
   def ply(moves : Array(String))
-    moves.each &->ply(String)
+    tap { moves.each &->ply(String) }
   end
 end
