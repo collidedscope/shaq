@@ -25,6 +25,19 @@ class Shaq::Game
     can_move? piece, Util.from_algebraic square
   end
 
+  def update(from, to, irreversible)
+    san_history << algebraic_move from, to
+    uci_history << Util.to_uci from, to
+    @hm_clock = irreversible ? 0 : hm_clock + 1
+    @move += 1 if black?
+    ply
+
+    castling.delete 2 if {0, 4}.includes? from
+    castling.delete 6 if {4, 7}.includes? from
+    castling.delete 58 if {56, 60}.includes? from
+    castling.delete 62 if {60, 63}.includes? from
+  end
+
   def ply
     tap { @turn = other_side }
   end
@@ -53,19 +66,7 @@ class Shaq::Game
     end
 
     irreversible = piece.pawn? || board[to]
-
-    if real
-      san_history << algebraic_move from, (promo || 0) << 6 | to
-      uci_history << Util.to_uci from, (promo || 0) << 6 | to
-      @hm_clock = irreversible ? 0 : hm_clock + 1
-      @move += 1 if black?
-      ply
-
-      castling.delete 2 if {0, 4}.includes? from
-      castling.delete 6 if {4, 7}.includes? from
-      castling.delete 58 if {56, 60}.includes? from
-      castling.delete 62 if {60, 63}.includes? from
-    end
+    update from, (promo || 0) << 6 | to, irreversible if real
 
     board[from], board[to] = nil, piece.tap &.position = to
     positions[position] += 1 if real unless irreversible
