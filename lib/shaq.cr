@@ -1,3 +1,6 @@
+require "compress/gzip"
+require "yaml"
+
 module Shaq
   enum Side
     Black
@@ -61,6 +64,13 @@ module Shaq
         yield game
       end
     end
+  end
+
+  OPENING_TREE = "#{__DIR__}/../data/opening_tree.yaml.gz"
+  @@openings : YAML::Any?
+
+  def self.opening_tree
+    @@openings ||= Compress::Gzip::Reader.open OPENING_TREE, &->YAML.parse(IO)
   end
 end
 
