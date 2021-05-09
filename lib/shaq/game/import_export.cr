@@ -91,7 +91,7 @@ module Shaq
                      "1/2-1/2"
                    end
 
-        moves = history.each_slice 2
+        moves = san_history.each_slice 2
         movetext = moves.map_with_index(initial_move) { |move, i| "#{i}. #{move.join ' '}" }
         movetext << result if result
         s.puts movetext.join ' '

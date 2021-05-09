@@ -14,13 +14,13 @@ module Shaq
       hm_clock : Int32,
       move : Int32,
       initial_move : Int32,
-      history = [] of String,
+      san_history = [] of String,
       positions = Hash(Position, Int32).new(0),
       tags = {} of String => String?
 
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
       @initial_move = move
-      history << "..." if black?
+      san_history << "..." if black?
     end
 
     def self.new

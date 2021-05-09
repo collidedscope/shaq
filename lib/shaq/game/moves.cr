@@ -55,7 +55,7 @@ class Shaq::Game
     irreversible = piece.pawn? || board[to]
 
     if real
-      history << algebraic_move from, (promo || 0) << 6 | to
+      san_history << algebraic_move from, (promo || 0) << 6 | to
       @hm_clock = irreversible ? 0 : hm_clock + 1
       @move += 1 if black?
       ply

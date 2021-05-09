@@ -11,4 +11,4 @@ p game.checkmate?
 game.ply "fxg6"
 p game.checkmate?
 
-p game.history
+p game.san_history
