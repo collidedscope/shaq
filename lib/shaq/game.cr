@@ -15,6 +15,7 @@ module Shaq
       move : Int32,
       initial_move : Int32,
       san_history = [] of String,
+      uci_history = [] of String,
       positions = Hash(Position, Int32).new(0),
       tags = {} of String => String?
 

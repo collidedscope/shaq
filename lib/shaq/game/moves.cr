@@ -56,6 +56,7 @@ class Shaq::Game
 
     if real
       san_history << algebraic_move from, (promo || 0) << 6 | to
+      uci_history << Util.to_uci from, (promo || 0) << 6 | to
       @hm_clock = irreversible ? 0 : hm_clock + 1
       @move += 1 if black?
       ply
