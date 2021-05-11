@@ -71,7 +71,7 @@ module Shaq
 
     def to_fen
       ranks = Util.fenalize board
-      ep = ep_target ? Util.to_algebraic(ep_target.not_nil!) : '-'
+      ep = Util.to_algebraic ep_target
 
       {ranks, black? ? 'b' : 'w', castling, ep, hm_clock, move}.join ' '
     end

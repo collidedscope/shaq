@@ -8,7 +8,8 @@ module Shaq::Util
   end
 
   def to_algebraic(position)
-    raise "Invalid position: #{position}" unless (0..63) === position
+    return '-' unless position
+    raise "Invalid position: #{position}" unless 0 <= position <= 63
 
     rank, file = position.divmod 8
     "#{'a' + file}#{8 - rank}"
