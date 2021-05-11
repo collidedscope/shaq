@@ -40,4 +40,31 @@ describe Game do
       checkmate?.should be_true
     end
   end
+
+  it "knows about capturing en passant" do
+    subject Game.from_fen "5B2/6p1/8/4RP1k/4pK1N/6P1/4qP2/8 b - - 0 1" do
+      # https://en.wikipedia.org/wiki/En_passant#Unusual_examples
+      # The position:
+      # . . . . . B . .
+      # . . . . . . p .
+      # . . . . . . . .
+      # . . . . R P . k
+      # . . . . p K . N
+      # . . . . . . P .
+      # . . . . q P . .
+      # . . . . . . . .
+
+      # Black double-moves the Pawn, attacking and very nearly mating the King.
+      ply "g5"
+
+      # White's only response is to capture the Pawn en passant...
+      ep_target.should eq G6
+      legal_moves.should eq [{F5, G6}]
+      ply F5, G6
+
+      # ... which happens to be discovered checkmate.
+      legal_moves.should be_empty
+      san_history.last.should eq "fxg6#"
+    end
+  end
 end
