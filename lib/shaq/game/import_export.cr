@@ -77,11 +77,18 @@ module Shaq
     end
 
     def to_pgn(ignore_spec = false)
-      STR.each { |tag| @tags[tag] ||= nil } unless ignore_spec
-
       String.build do |s|
-        tags.keys.sort_by { |tag| STR.index(tag) || 1/0 }.each do |tag|
-          s.puts %([#{tag} "#{tags[tag] || '?'}"])
+        # Prioritize the Seven Tag Roster per the PGN specification.
+        STR.each do |tag|
+          if value = tags[tag]?
+            s.puts %([#{tag} "#{value}"])
+          else
+            s.puts %([#{tag} "?"]) unless ignore_spec
+          end
+        end
+
+        tags.each do |tag, value|
+          s.puts %([#{tag} "#{value}"]) unless STR.includes? tag
         end
 
         s << '\n' unless tags.empty?
