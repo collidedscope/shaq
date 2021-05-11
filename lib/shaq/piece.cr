@@ -81,13 +81,13 @@ module Shaq
 
     def moves(game)
       moves = vision(game).select { |square| enemy? game.board[square] }
-      once, twice = white? ? [-8, -16] : [8, 16]
+      forward = black? ? 8 : -8
 
-      if !game.board[position + once]
-        moves << position + once
-        if rank == PAWN_RANKS[side] && !game.board[position + twice]
-          moves << position + twice
-        end
+      if !game.board[square = position + forward]
+        moves << square
+        twice = game.horde? && white? ? rank < 3 : rank == PAWN_RANKS[side]
+        twice &&= !game.board[square += forward]
+        moves << square if twice
       end
 
       if ep = game.ep_target
