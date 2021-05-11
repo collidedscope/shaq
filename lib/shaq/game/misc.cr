@@ -3,6 +3,10 @@ class Shaq::Game
     board.each_with_index.sum { |e, i| (e ? 1u64 : 0u64) << i }
   end
 
+  def [](square)
+    board[square.value]
+  end
+
   def opening
     tree = Shaq.opening_tree
     last_known = leaf = nil
