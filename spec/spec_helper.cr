@@ -2,19 +2,16 @@ require "spec"
 require "shaq"
 
 struct Enum
-  macro expose
+  macro expose_values
     {% for c in @type.constants %}
-      {{c}} = {{@type}}::{{c}}
+      {{c}} = {{@type}}::{{c}}.value
     {% end %}
   end
 end
 
-macro subject(obj, &block)
-  %obj = {{obj}}
-  {% for line in block.body.stringify.lines %}
-    %obj.{{line.id}}
-  {% end %}
+def subject(obj, &block)
+  with obj yield
 end
 
 include Shaq
-Square.expose
+Square.expose_values
