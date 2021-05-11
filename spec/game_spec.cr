@@ -25,4 +25,19 @@ describe Game do
       board[G8].should be_nil
     end
   end
+
+  it "knows when the King is in danger" do
+    subject Game.new do
+      ply %w[e4 d5 Bb5]
+      san_history.last.should eq "Bb5+"
+      check?.should be_true
+    end
+  end
+
+  it "knows when the King has nowhere to go" do
+    subject Game.new do
+      ply %w[f3 e6 g4 Qh4#]
+      checkmate?.should be_true
+    end
+  end
 end
