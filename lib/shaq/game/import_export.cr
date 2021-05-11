@@ -6,7 +6,7 @@ module Shaq
     def self.from_fen(fen)
       fields = fen.split
       raise "Invalid FEN: need exactly 6 fields" unless fields.size == 6
-      ranks, turn, castling, ep, hm_clock, move = fields
+      ranks, side, castling, ep, hm_clock, move = fields
 
       if bad = ranks.chars.find &.in_set? "^PRNBQKprnbqk/1-8"
         raise "Invalid FEN: '#{bad}' in ranks"
@@ -19,7 +19,9 @@ module Shaq
 
       raise "Invalid FEN: need exactly 64 squares" unless board.size == 64
 
-      turn = {b: Side::Black, w: Side::White}[turn]
+      unless turn = {b: Side::Black, w: Side::White}[side]?
+        raise "Invalid FEN: side must be 'b' or 'w', not '#{side}'"
+      end
 
       castling_squares = {'K' => 62, 'Q' => 58, 'k' => 6, 'q' => 2}
       castling = castling.chars.map(&->castling_squares.[]?(Char)).compact
