@@ -9,8 +9,12 @@ struct Enum
   end
 end
 
-def subject(obj, &block)
+def subject(obj)
   with obj yield
+end
+
+def new_game
+  with Game.new yield
 end
 
 include Shaq

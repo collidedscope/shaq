@@ -2,7 +2,7 @@ require "./spec_helper"
 
 describe Shaq do
   it "can create a Game representing the initial position" do
-    subject Game.new do
+    new_game do
       board.size.should eq 64
       pieces.size.should eq 32
       turn.should eq Side::White
@@ -13,7 +13,7 @@ end
 
 describe Game do
   it "updates the state of the board as moves are played" do
-    subject Game.new do
+    new_game do
       board[D4].should be_nil
       ply "d4"
       board[D4].should be_a Pawn
@@ -27,7 +27,7 @@ describe Game do
   end
 
   it "knows when the King is in danger" do
-    subject Game.new do
+    new_game do
       ply %w[e4 d5 Bb5]
       san_history.last.should eq "Bb5+"
       check?.should be_true
@@ -35,7 +35,7 @@ describe Game do
   end
 
   it "knows when the King has nowhere to go" do
-    subject Game.new do
+    new_game do
       ply %w[f3 e6 g4 Qh4#]
       checkmate?.should be_true
     end
