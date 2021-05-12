@@ -1,7 +1,6 @@
 module Shaq
   class Game
     STANDARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    STR   = %w[Event Site Date Round White Black Result]
 
     def self.from_fen(fen)
       fields = fen.split
@@ -77,9 +76,11 @@ module Shaq
     end
 
     def to_pgn(ignore_spec = false)
+      roster = %i[Event Site Date Round White Black Result]
+
       String.build do |s|
         # Prioritize the Seven Tag Roster per the PGN specification.
-        STR.each do |tag|
+        roster.each do |tag|
           if value = tags[tag]?
             s.puts %([#{tag} "#{value}"])
           else
@@ -88,7 +89,7 @@ module Shaq
         end
 
         tags.each do |tag, value|
-          s.puts %([#{tag} "#{value}"]) unless STR.includes? tag
+          s.puts %([#{tag} "#{value}"]) unless roster.includes? tag
         end
 
         s << '\n' unless tags.empty?
