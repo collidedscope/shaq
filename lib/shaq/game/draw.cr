@@ -1,9 +1,22 @@
 require "colorize"
 
+def hex_to_rgb(hex)
+  hex, b = hex.divmod 256
+  hex, g = hex.divmod 256
+  {hex.to_u8, g.to_u8, b.to_u8}
+end
+
 class Shaq::Game
-  def draw(dark = 25, light = 69, black = 16, white = 255, flip = false)
+  THEMES = {
+    oxford: {0x192484, 0x4352db, 0x000000, 0xffffff},
+    combat: {0x000000, 0xffffff, 0x0000ff, 0xff0000},
+    coffee: {0x613a1c, 0xac6732, 0x000000, 0xffffff},
+    purple: {0x4d4861, 0x605770, 0x221d23, 0xf7c4a5},
+  }
+
+  def draw(dark, light, black, white, flip = false)
     dark, light, black, white = {dark, light, black, white}.map { |color|
-      Colorize::Color256.new color.to_u8
+      Colorize::ColorRGB.new *hex_to_rgb color
     }
 
     (flip ? board.reverse : board).each_slice(8).with_index do |row, i|
@@ -15,5 +28,9 @@ class Shaq::Game
       end
       puts
     end
+  end
+
+  def draw(theme = :oxford, flip = false)
+    draw *THEMES[theme], flip
   end
 end
