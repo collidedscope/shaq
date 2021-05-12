@@ -3,6 +3,10 @@ class Shaq::Game
     board.each_with_index.sum { |e, i| (e ? 1u64 : 0u64) << i }
   end
 
+  def occupied?(position)
+    !!board[position]
+  end
+
   def [](square)
     board[square.value]
   end
