@@ -23,6 +23,10 @@ class Shaq::Game
     enemies.select &.class.== piece
   end
 
+  def vision
+    friends.flat_map &.vision self
+  end
+
   def enemy_vision
     enemies.flat_map &.vision self
   end
