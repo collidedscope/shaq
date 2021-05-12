@@ -1,6 +1,6 @@
 module Shaq
   class Game
-    START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    STANDARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     STR   = %w[Event Site Date Round White Black Result]
 
     def self.from_fen(fen)
@@ -30,7 +30,7 @@ module Shaq
 
       game = new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
       raise "Illegal position: King can be taken" if game.ply.check?
-      game.ply.tap { |g| g.add_tag "FEN", fen unless fen == START }
+      game.ply.tap { |g| g.add_tag "FEN", fen unless fen == STANDARD }
     end
 
     def self.from_pgn(pgn)

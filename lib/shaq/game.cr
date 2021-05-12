@@ -25,7 +25,7 @@ module Shaq
     end
 
     def self.new
-      from_fen START
+      from_fen STANDARD
     end
   end
 end
