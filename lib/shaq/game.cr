@@ -1,4 +1,4 @@
-require "shaq/game/*"
+require "shaq/game/**"
 
 module Shaq
   class Game
