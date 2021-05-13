@@ -9,10 +9,6 @@ module Shaq
       false
     end
 
-    def checkmate?
-      false
-    end
-
     def can_capture?
       !(vision & enemies.map &.position).empty?
     end
