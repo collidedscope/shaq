@@ -8,10 +8,6 @@ module Shaq
     def check?
       black? && super
     end
-
-    def checkmate?
-      black? && super
-    end
   end
 
   class Game
