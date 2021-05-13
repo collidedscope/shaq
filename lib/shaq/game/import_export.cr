@@ -39,25 +39,36 @@ module Shaq
     def self.from_pgn_io(io)
       return nil unless io.peek.try &.first?
 
-      game = new
+      game = nil
+      tags = {} of String => String
 
       while line = io.gets
-        if line.match /\[(\S+) "(.+?)"\]/
-          if $1 == "FEN"
-            game = from_fen($2).tap &.tags.merge! game.tags
-          else
-            game.add_tag $1, $2
-          end
-        else
-          # TODO: Preserve commentary?
-          line.gsub(/({.+?}|(\(.+?\)))/, "").split do |ply|
-            game.ply ply unless ply[0].ascii_number?
-          end
-          break if io.peek.try &.first? === '['
+        next tags[$1] = $2 if line.match /\[(\S+) "(.+?)"\]/
+
+        game ||= from_tags tags
+
+        # TODO: Preserve commentary?
+        line.gsub(/({.+?}|(\(.+?\)))/, "").split do |ply|
+          game.ply ply unless ply[0].ascii_number? || ply == "*"
         end
+        break if io.peek.try &.first? === '['
       end
 
       game
+    end
+
+    def self.from_tags(tags)
+      type = case tags["Variant"]?
+             when "Antichess"; AntichessGame
+             when "Horde"    ; HordeGame
+             else              Game
+             end
+
+      if fen = tags["FEN"]?
+        type.from_fen fen
+      else
+        type.new
+      end.tap &.tags = tags
     end
 
     def self.from_pgn_file(path)
