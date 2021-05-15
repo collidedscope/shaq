@@ -23,4 +23,10 @@ class Shaq::Game
 
     tree[nil]? || last_known
   end
+
+  def shuffle!
+    board.shuffle!.each_with_index do |piece, i|
+      piece.try &.position = i
+    end
+  end
 end
