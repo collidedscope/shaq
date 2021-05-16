@@ -58,6 +58,7 @@ module Shaq
     def self.from_tags(tags)
       type = case tags["Variant"]?
              when "Antichess"; AntichessGame
+             when "Atomic"   ; AtomicGame
              when "Horde"    ; HordeGame
              else              Game
              end
