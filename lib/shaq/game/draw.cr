@@ -23,7 +23,7 @@ class Shaq::Game
     (flip ? board.reverse : board).each_slice(8).with_index do |row, i|
       row.each_with_index do |piece, j|
         square = (i + j).odd? ? dark : light
-        symbol = "#{piece.try(&.symbol) || ' '} "
+        symbol = "#{piece.try(&.symbol) || ' '} "
         color = piece.try(&.white?) ? white : black
         print symbol.colorize(color).back square
       end
