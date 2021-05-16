@@ -30,6 +30,10 @@ class Shaq::Game
     end
   end
 
+  def inspect(io)
+    io << Util.fenalize(board).gsub(/(\d)/) { "." * $1.to_i }.tr("/", "\n")
+  end
+
   def draw(theme = :oxford, flip = false)
     draw *THEMES[theme], flip
   end
