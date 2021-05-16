@@ -1,10 +1,13 @@
 class Shaq::Game
   def clone
-    dup.tap &.board = board.map &.dup
+    dup.tap { |fake|
+      fake.board = board.map &.dup
+      fake.real = false
+    }
   end
 
   def sim(from, to)
-    clone.ply from, to, false
+    clone.ply from, to
   end
 
   def legal_moves_for(piece) : Array(Int32)
@@ -42,7 +45,7 @@ class Shaq::Game
     tap { @turn = other_side }
   end
 
-  def ply(from, to, real = true)
+  def ply(from, to)
     raise "Game is over!" if real && over?
     raise "No piece at #{from}!" unless piece = board[from]
     raise "Illegal move: #{from}->#{to}" unless !real || can_move? piece, to
