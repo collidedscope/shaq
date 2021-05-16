@@ -74,7 +74,7 @@ module Shaq
 
   class Pawn < Piece
     def vision(game)
-      reachable white? ? [-9, -7] : [7, 9]
+      PAWN_VISION[side][position]
     end
 
     def moves(game)
