@@ -81,7 +81,7 @@ class Shaq::Game
   end
 
   def ply(move : String)
-    return ply *Util.from_uci move if move.match Util::UCI
+    return ply *Util.from_uci move if move.match UCI
     san = move
 
     return ply king, LONG_CASTLE[turn][:king] if san["O-O-O"]?

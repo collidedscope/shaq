@@ -1,6 +1,4 @@
 module Shaq::Util
-  UCI = /^([a-h][1-8]){2}[qnrb]?/
-
   extend self
 
   def inbounds?(from, to)
@@ -42,7 +40,7 @@ module Shaq::Util
     board.map { |piece|
       next '.' unless piece
 
-      letter = Shaq::Game::LETTERS[piece.class].to_s
+      letter = LETTERS[piece.class].to_s
       piece.black? ? letter.downcase : letter
     }.join.scan(/.{8}/).map(&.[0].gsub /\.+/, &.size).join '/'
   end

@@ -1,7 +1,5 @@
 module Shaq
   class Game
-    STANDARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-
     def self.from_fen(fen)
       fields = fen.split
       raise "Invalid FEN: need exactly 6 fields" unless fields.size == 6

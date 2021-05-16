@@ -4,8 +4,6 @@ module Shaq
     delegate black?, white?, to: side
     delegate color, rank, file, to: square
 
-    ROYAL = [-9, -8, -7, -1, 1, 7, 8, 9]
-
     def initialize(@side, @position)
     end
 

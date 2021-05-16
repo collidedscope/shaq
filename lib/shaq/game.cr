@@ -2,8 +2,6 @@ require "shaq/game/**"
 
 module Shaq
   class Game
-    PIECES = {P: Pawn, R: Rook, N: Knight, B: Bishop, Q: Queen, K: King}
-
     alias Position = Tuple(String, Side, Array(Int32), Int32?)
 
     property \
