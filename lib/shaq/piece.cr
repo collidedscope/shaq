@@ -130,6 +130,8 @@ module Shaq
       moves = super
       moves << LONG_CASTLE[side][:king] if can_castle? game, LONG_CASTLE
       moves << SHORT_CASTLE[side][:king] if can_castle? game, SHORT_CASTLE
+
+      moves.reject! &->game.occupied?(Int32) if game.atomic?
       moves
     end
 
