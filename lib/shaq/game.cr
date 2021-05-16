@@ -4,6 +4,7 @@ module Shaq
   class Game
     alias Position = Tuple(String, Side, Array(Int32), Int32?)
 
+    property? real = true
     property \
       board : Array(Piece?),
       turn : Side,
@@ -12,7 +13,6 @@ module Shaq
       hm_clock : Int32,
       move : Int32,
       initial_move : Int32,
-      real = true,
       san_history = [] of String,
       uci_history = [] of String,
       positions = Hash(Position, Int32).new(0),

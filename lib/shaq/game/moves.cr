@@ -46,9 +46,9 @@ class Shaq::Game
   end
 
   def ply(from, to)
-    raise "Game is over!" if real && over?
+    raise "Game is over!" if real? && over?
     raise "No piece at #{from}!" unless piece = board[from]
-    raise "Illegal move: #{from}->#{to}" unless !real || can_move? piece, to
+    raise "Illegal move: #{from}->#{to}" unless !real? || can_move? piece, to
 
     board.swap to, to + (white? ? 8 : -8) if piece.pawn? && to == @ep_target
     @ep_target = nil
@@ -69,10 +69,10 @@ class Shaq::Game
     end
 
     irreversible = piece.pawn? || board[to]
-    update from, (promo || 0) << 6 | to, irreversible if real
+    update from, (promo || 0) << 6 | to, irreversible if real?
 
     board[from], board[to] = nil, piece.tap &.position = to
-    positions[position] += 1 if real unless irreversible
+    positions[position] += 1 if real? unless irreversible
     self
   end
 
