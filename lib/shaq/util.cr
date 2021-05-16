@@ -44,4 +44,8 @@ module Shaq::Util
       piece.black? ? letter.downcase : letter
     }.join.scan(/.{8}/).map(&.[0].gsub /\.+/, &.size).join '/'
   end
+
+  macro moore_neighborhood(square)
+    MOORE_NEIGHBORHOODS[{{square}}]
+  end
 end

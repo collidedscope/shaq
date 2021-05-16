@@ -5,4 +5,10 @@ module Shaq
   LETTERS  = PIECES.to_h.invert
   ROYAL    = {-9, -8, -7, -1, 1, 7, 8, 9}
   UCI      = /^([a-h][1-8]){2}[qnrb]?/
+
+  MOORE_NEIGHBORHOODS = {% begin %} {
+      {% for i in 0..63 %} [
+        {% for j in ROYAL.map &.+ i %}
+          {% if 0 <= j && j <= 63 && {-1, 0, 1}.includes? i % 8 - j % 8 %}
+            {{j}}, {% end %} {% end %} ], {% end %} } {% end %}
 end

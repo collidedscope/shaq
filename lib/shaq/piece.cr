@@ -125,7 +125,7 @@ module Shaq
 
   class King < Piece
     def vision(game)
-      reachable ROYAL
+      Util.moore_neighborhood position
     end
 
     def moves(game)
