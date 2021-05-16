@@ -27,14 +27,6 @@ module Shaq
       pawn? && rank == PAWN_RANKS[side.other]
     end
 
-    def reachable?(square)
-      Util.inbounds? position, square
-    end
-
-    def reachable(offsets)
-      offsets.map(&.+ position).select &->reachable?(Int32)
-    end
-
     def traverse(board, heading)
       squares = [] of Int32
       now = position
