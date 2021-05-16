@@ -11,4 +11,10 @@ module Shaq
         {% for j in ROYAL.map &.+ i %}
           {% if 0 <= j && j <= 63 && {-1, 0, 1}.includes? i % 8 - j % 8 %}
             {{j}}, {% end %} {% end %} ], {% end %} } {% end %}
+
+  KNIGHT_VISION = {% begin %} {
+      {% for i in 0..63 %} [
+        {% for j in {-17, -15, -10, -6, 6, 10, 15, 17}.map &.+ i %}
+          {% if 0 <= j && j <= 63 && {-2, -1, 1, 2}.includes? i % 8 - j % 8 %}
+            {{j}}, {% end %} {% end %} ], {% end %} } {% end %}
 end

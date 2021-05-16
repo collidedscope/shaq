@@ -104,10 +104,8 @@ module Shaq
   end
 
   class Knight < Piece
-    NEIGHBORS = [-17, -15, -10, -6, 6, 10, 15, 17]
-
     def vision(game)
-      reachable NEIGHBORS
+      KNIGHT_VISION[position]
     end
   end
 
