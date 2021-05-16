@@ -6,7 +6,7 @@ class Shaq::Game
   end
 
   def check?
-    enemy_vision.includes? king.position
+    attacked? king.position
   end
 
   def checkmate?
