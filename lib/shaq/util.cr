@@ -28,7 +28,7 @@ module Shaq::Util
   end
 
   def from_uci(uci)
-    raise "Invalid UCI: #{uci}" unless uci.match UCI
+    raise InvalidMoveError.new "UCI: #{uci}" unless uci.match UCI
 
     from, to, promo = uci[0, 2], uci[2, 2], uci[4]?
     promo = promo ? "qnrb".index(promo).not_nil! : 0

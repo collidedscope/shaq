@@ -61,6 +61,7 @@ module Shaq
   end
 end
 
+require "shaq/errors"
 require "shaq/constants"
 require "shaq/util"
 require "shaq/game"

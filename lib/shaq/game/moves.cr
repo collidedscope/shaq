@@ -48,7 +48,7 @@ class Shaq::Game
   def ply(from, to)
     raise "Game is over!" if real? && over?
     raise "No piece at #{from}!" unless piece = board[from]
-    raise "Illegal move: #{from}->#{to}" unless !real? || can_move? piece, to
+    raise IllegalMoveError.new from, to unless !real? || can_move? piece, to
 
     board.swap to, to + (white? ? 8 : -8) if piece.pawn? && to == @ep_target
     @ep_target = nil
@@ -98,9 +98,11 @@ class Shaq::Game
       candidates.select! &.file.== file[0] if file = mover[/[a-h]/]?
 
       piece = candidates.find { |c| can_move? c, square }
+    else
+      raise InvalidMoveError.new san
     end
 
-    raise "Invalid or illegal move: #{san}" unless piece && square
+    raise IllegalMoveError.new san unless piece
 
     target = Util.from_algebraic square
     target |= "QNRB".index($1).not_nil! << 6 if san.match(/=([QNRB])/)
