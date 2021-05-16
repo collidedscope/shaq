@@ -44,9 +44,9 @@ module Shaq
 
       piece.moves(self).select { |square|
         sim = sim piece.position, square
-        # A move is legal if it explodes the enemy King OR doesn't leave
-        # us in check, with the former having the greater precedence.
-        sim.ply.no_king? || !sim.ply.check?
+        # A move is legal if it explodes the enemy King without exploding ours
+        # OR doesn't leave us in check, with the former having higher priority.
+        sim.ply.no_king? || !sim.ply.check? unless sim.no_king?
       }
     end
   end
