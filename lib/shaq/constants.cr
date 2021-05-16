@@ -6,6 +6,18 @@ module Shaq
   ROYAL    = {-9, -8, -7, -1, 1, 7, 8, 9}
   UCI      = /^([a-h][1-8]){2}[qnrb]?/
 
+  BACK_RANKS = {Side::White => 1, Side::Black => 8}
+  PAWN_RANKS = {Side::White => 2, Side::Black => 7}
+
+  LONG_CASTLE = {
+    Side::Black => {king: 2, path: 2..3, rook: {0, 3}},
+    Side::White => {king: 58, path: 58..59, rook: {56, 59}},
+  }
+  SHORT_CASTLE = {
+    Side::Black => {king: 6, path: 5..6, rook: {7, 5}},
+    Side::White => {king: 62, path: 61..62, rook: {63, 61}},
+  }
+
   MOORE_NEIGHBORHOODS = {% begin %} {
       {% for i in 0..63 %} [
         {% for j in ROYAL.map &.+ i %}
