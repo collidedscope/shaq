@@ -40,6 +40,8 @@ module Shaq
     end
 
     def legal_moves_for(piece) : Array(Int32)
+      return [] of Int32 if no_king?
+
       piece.moves(self).select { |square|
         sim = sim piece.position, square
         # A move is legal if it explodes the enemy King OR doesn't leave
