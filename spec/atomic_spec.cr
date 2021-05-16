@@ -75,4 +75,10 @@ describe AtomicGame do
       stalemate?.should be_true
     end
   end
+
+  it "permits castling in surprisingly legal situations" do
+    subject AtomicGame.from_fen "8/8/8/8/8/8/4k3/R3K2q w Q - 0 1" do
+      king.can_castle? itself, LONG_CASTLE
+    end
+  end
 end
