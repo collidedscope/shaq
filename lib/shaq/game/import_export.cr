@@ -30,6 +30,25 @@ module Shaq
       game.ply.tap { |g| g.add_tag "FEN", fen unless fen == STANDARD }
     end
 
+    def self.from_diagram(diagram)
+      lines = diagram.lines
+      fields = lines.shift
+      board = lines[...-1].flat_map &.split[1..]
+
+      unchecked_from_fen \
+        board.map_with_index { |c, i| Piece.from_letter c[0], i },
+        fields
+    end
+
+    def self.unchecked_from_fen(board, fields)
+      side, castling, ep, hm_clock, move = fields.split
+      turn = {b: Side::Black, w: Side::White}[side]
+      castling_squares = {'K' => 62, 'Q' => 58, 'k' => 6, 'q' => 2}
+      castling = castling.chars.map(&->castling_squares.[]?(Char)).compact
+      ep_target = Util.from_algebraic ep if ep != "-"
+      new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
+    end
+
     def self.from_pgn(pgn)
       from_pgn_io IO::Memory.new pgn
     end
