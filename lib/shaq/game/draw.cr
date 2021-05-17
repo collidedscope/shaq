@@ -32,7 +32,12 @@ class Shaq::Game
   end
 
   def inspect(io)
-    io << Util.fenalize(board).gsub(/(\d)/) { "." * $1.to_i }.tr("/", "\n")
+    board.each_slice(8).with_index do |rank, i|
+      io << (8 - i) << ' ' << rank.map { |piece|
+        piece.try &.letter || '.'
+      }.join(' ') << '\n'
+    end
+    io << "  a b c d e f g h"
   end
 
   def draw(theme = :oxford, flip = false)
