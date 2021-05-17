@@ -6,8 +6,8 @@ class Shaq::Game
     }
   end
 
-  def sim(from, to)
-    clone.ply from, to
+  def sim(*args)
+    clone.ply *args
   end
 
   def legal_moves_for(piece) : Array(Int32)
