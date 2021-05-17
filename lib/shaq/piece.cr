@@ -137,10 +137,10 @@ module Shaq
     end
   end
 
-  {% for piece, offset in [King, Queen, Rook, Bishop, Knight, Pawn] %}
+  {% for piece, offset in PIECES.values %}
     class {{piece}}
       def symbol
-        (0x265A + {{offset}}).chr
+        '♚' + {{offset}}
       end
     end
   {% end %}
