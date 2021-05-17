@@ -4,7 +4,19 @@ require "./spec_helper"
 
 describe AtomicGame do
   it "makes captures cause (potentially massive) explosions" do
-    subject AtomicGame.from_fen "8/2bpk3/8/4P3/8/8/3K3B/8 b - - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      b - - 0 1
+      8 . . . . . . . .
+      7 . . b p k . . .
+      6 . . . . . . . .
+      5 . . . . P . . .
+      4 . . . . . . . .
+      3 . . . . . . . .
+      2 . . . K . . . B
+      1 . . . . . . . .
+        a b c d e f g h
+      EOD
+
       ply "d5"
       pieces.size.should eq 6
       ply "exd6"
@@ -16,46 +28,130 @@ describe AtomicGame do
   end
 
   it "prevents friendly fire on the King" do
-    subject AtomicGame.from_fen "5R2/8/8/8/4k3/5pK1/8/8 w - - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      w - - 0 1
+      8 . . . . . R . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . . . . . .
+      4 . . . . k . . .
+      3 . . . . . p K .
+      2 . . . . . . . .
+      1 . . . . . . . .
+        a b c d e f g h
+      EOD
+
       expect_raises(IllegalMoveError) { ply "Rxf3" }
     end
   end
 
   it "allows Kings to be adjacent since they can't capture" do
-    subject AtomicGame.from_fen "8/8/8/8/8/2K2Q2/2k5/8 w - - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      w - - 0 1
+      8 . . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . . . . . .
+      4 . . . . . . . .
+      3 . . K . . Q . .
+      2 . . k . . . . .
+      1 . . . . . . . .
+        a b c d e f g h
+      EOD
+
       check?.should be_false
       ply.check?.should be_false
     end
   end
 
   it "permits nonstandard ways to escape check" do
-    subject AtomicGame.from_fen "rnbqk1r1/1p2p2p/p1pp1pp1/q1N5/3PP3/8/PPP2PPP/R2QKB1R w KQkq - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      w KQkq - 0 1
+      8 r n b q k . r .
+      7 . p . . p . . p
+      6 p . p p . p p .
+      5 q . N . . . . .
+      4 . . . P P . . .
+      3 . . . . . . . .
+      2 P P P . . P P P
+      1 R . . Q K B . R
+        a b c d e f g h
+      EOD
+
       check?.should be_true
       legal_moves.should contain({F1, A6})
-      ply(F1, A6).ply.check?.should be_false
+      sim(F1, A6).check?.should be_false
     end
   end
 
   it "knows that being one move away from exploded isn't necessarily check" do
-    subject AtomicGame.from_fen "8/8/8/3k3b/8/8/4N1P1/3K4 w - - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      w - - 0 1
+      8 . . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . k . . . b
+      4 . . . . . . . .
+      3 . . . . . . . .
+      2 . . . . N . P .
+      1 . . . K . . . .
+        a b c d e f g h
+      EOD
+
       check?.should be_false
     end
   end
 
   it "allows the King to be in the line of sight of powerless attackers" do
-    subject AtomicGame.from_fen "8/8/8/7b/8/7N/6P1/2kK4 w - - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      w - - 0 1
+      8 . . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . . . . . b
+      4 . . . . . . . .
+      3 . . . . . . . N
+      2 . . . . . . P .
+      1 . . k K . . . .
+        a b c d e f g h
+      EOD
+
       check?.should be_false
     end
   end
 
   it "prevents captures whose explosions would leave the King in check" do
-    subject AtomicGame.from_fen "8/8/8/7b/5NN1/7N/6P1/1k1K4 w - - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      w - - 0 1
+      8 . . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . . . . . b
+      4 . . . . . N N .
+      3 . . . . . . . N
+      2 . . . . . . P .
+      1 . k . K . . . .
+        a b c d e f g h
+      EOD
+
       expect_raises(IllegalMoveError) { ply "Nxf4" }
     end
   end
 
   it "understands that explosion beats check" do
-    subject AtomicGame.from_fen "r1b1k1nr/pp1pQ1pp/n1p2p2/1B2p3/1P5q/4P3/P1PP1PPP/RN2K2R b KQkq - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      b KQkq - 0 1
+      8 r . b . k . n r
+      7 p p . p Q . p p
+      6 n . p . . p . .
+      5 . B . . p . . .
+      4 . P . . . . . q
+      3 . . . . P . . .
+      2 P . P P . P P P
+      1 R N . . K . . R
+        a b c d e f g h
+      EOD
+
       check?.should be_true
       checkmate?.should be_false
       legal_moves_for(king).should be_empty
@@ -65,19 +161,55 @@ describe AtomicGame do
   end
 
   it "knows about atomic checkmate" do
-    subject AtomicGame.from_fen "rn1qkb1r/pppBpppp/5n2/3p4/6b1/4PQ2/PPPP1PPP/RNB1K1NR b KQkq - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      b KQkq - 0 1
+      8 r n . q k b . r
+      7 p p p B p p p p
+      6 . . . . . n . .
+      5 . . . p . . . .
+      4 . . . . . . b .
+      3 . . . . P Q . .
+      2 P P P P . P P P
+      1 R N B . K . N R
+        a b c d e f g h
+      EOD
+
       checkmate?.should be_true
     end
   end
 
   it "knows about atomic stalemate" do
-    subject AtomicGame.from_fen "8/8/8/8/8/8/6QQ/6kK b - - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      b - - 0 1
+      8 . . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . . . . . .
+      4 . . . . . . . .
+      3 . . . . . . . .
+      2 . . . . . . Q Q
+      1 . . . . . . k K
+        a b c d e f g h
+      EOD
+
       stalemate?.should be_true
     end
   end
 
   it "permits castling in surprisingly legal situations" do
-    subject AtomicGame.from_fen "8/8/8/8/8/8/4k3/R3K2q w Q - 0 1" do
+    subject AtomicGame.from_diagram <<-EOD do
+      w Q - 0 1
+      8 . . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . . . . . .
+      4 . . . . . . . .
+      3 . . . . . . . .
+      2 . . . . k . . .
+      1 R . . . K . . q
+        a b c d e f g h
+      EOD
+
       king.can_castle?(itself, LONG_CASTLE).should be_true
       sim("O-O-O").king.position.should eq C1
     end
