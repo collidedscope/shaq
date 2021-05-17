@@ -139,6 +139,10 @@ module Shaq
 
   {% for piece, offset in PIECES.values %}
     class {{piece}}
+      def letter
+        "kqrbnpKQRBNP"[side.value * 6 + {{offset}}]
+      end
+
       def symbol
         '♚' + {{offset}}
       end
