@@ -10,7 +10,7 @@ class Shaq::Game
     clone.ply *args
   end
 
-  def legal_moves_for(piece) : Array(Int32)
+  def legal_moves_for(piece)
     piece.moves(self).reject { |square| sim(piece, square).check? }
   end
 

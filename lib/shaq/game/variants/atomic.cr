@@ -39,7 +39,7 @@ module Shaq
       }
     end
 
-    def legal_moves_for(piece) : Array(Int32)
+    def legal_moves_for(piece)
       return [] of Int32 if no_king?
 
       piece.moves(self).select { |square|
