@@ -78,7 +78,8 @@ describe AtomicGame do
 
   it "permits castling in surprisingly legal situations" do
     subject AtomicGame.from_fen "8/8/8/8/8/8/4k3/R3K2q w Q - 0 1" do
-      king.can_castle? itself, LONG_CASTLE
+      king.can_castle?(itself, LONG_CASTLE).should be_true
+      sim("O-O-O").king.position.should eq C1
     end
   end
 end
