@@ -142,6 +142,10 @@ module Shaq
       def symbol
         '♚' + {{offset}}
       end
+
+      def sided_symbol
+        symbol - 6 * side.value
+      end
     end
   {% end %}
 end
