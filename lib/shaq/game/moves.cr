@@ -11,7 +11,7 @@ class Shaq::Game
   end
 
   def legal_moves_for(piece) : Array(Int32)
-    piece.moves(self).reject { |square| sim(piece.position, square).check? }
+    piece.moves(self).reject { |square| sim(piece, square).check? }
   end
 
   def legal_moves

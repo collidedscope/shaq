@@ -43,7 +43,7 @@ module Shaq
       return [] of Int32 if no_king?
 
       piece.moves(self).select { |square|
-        sim = sim piece.position, square
+        sim = sim piece, square
         # A move is legal if it explodes the enemy King without exploding ours
         # OR doesn't leave us in check, with the former having higher priority.
         sim.ply.no_king? || !sim.ply.check? unless sim.no_king?
