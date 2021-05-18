@@ -1,9 +1,6 @@
 class Shaq::Game
-  alias PieceType = (Queen | Rook | Bishop | Knight | Pawn).class
-  alias Material = Hash(PieceType, Int32)
-
   def material(side)
-    pieces(side).reject(&.king?).map &.class
+    pieces(side).map &.type
   end
 
   def material
@@ -11,7 +8,7 @@ class Shaq::Game
   end
 
   def material_value(material)
-    material.sum { |piece, amount| VALUES[piece] * amount }
+    material.sum { |piece, amount| VALUES[piece.to_s] * amount }
   end
 
   def material_value
@@ -22,7 +19,7 @@ class Shaq::Game
     black, white = material.values
     imbalance = {Side::Black => Material.new, Side::White => Material.new}
 
-    VALUES.each_key do |piece|
+    Piece::Type.each do |piece|
       diff = black.fetch(piece, 0) - white.fetch(piece, 0)
       imbalance[Side::Black][piece] = diff if diff > 0
       imbalance[Side::White][piece] = -diff if diff < 0

@@ -1,8 +1,14 @@
 module Shaq
+  alias Material = Hash(Piece::Type, Int32)
+
   abstract class Piece
     property side : Side, position : Int32
     delegate black?, white?, to: side
     delegate color, rank, file, to: square
+
+    enum Type
+      {% for piece in PIECES.values %} {{piece}}; {% end %}
+    end
 
     def initialize(@side, @position)
     end
@@ -139,6 +145,10 @@ module Shaq
 
   {% for piece, offset in PIECES.values %}
     class {{piece}}
+      def type
+        Type::{{piece}}
+      end
+
       def letter
         "kqrbnpKQRBNP"[side.value * 6 + {{offset}}]
       end
