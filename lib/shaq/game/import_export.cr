@@ -80,6 +80,7 @@ module Shaq
              when "Atomic"      ; AtomicGame
              when "Horde"       ; HordeGame
              when "Racing Kings"; RacingKingsGame
+             when "Three-check" ; ThreeCheckGame
              else                 Game
              end
 
