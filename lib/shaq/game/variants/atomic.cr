@@ -6,17 +6,17 @@ module Shaq
     end
 
     def ply(from : Int32, to)
-      capture = occupied?(to % 64) || board[from].try &.pawn? && to == ep_target
       super
-      return self unless capture
+      return self unless piece = capture
 
-      Util.moore_neighborhood(to % 64).each do |square|
+      epicenter = piece.position
+      Util.moore_neighborhood(epicenter).each do |square|
         if piece = board[square]
           board[square] = nil unless piece.pawn?
         end
       end
 
-      tap { board[to % 64] = nil }
+      tap { board[epicenter] = nil }
     end
 
     def no_king?
