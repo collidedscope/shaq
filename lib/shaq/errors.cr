@@ -1,4 +1,10 @@
 module Shaq
+  class InvalidFenError < Exception
+    def initialize(message)
+      super "Invalid FEN: #{message}"
+    end
+  end
+
   class InvalidMoveError < Exception
     def initialize(move)
       super "Invalid move: #{move}"
