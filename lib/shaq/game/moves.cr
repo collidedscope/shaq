@@ -33,7 +33,6 @@ class Shaq::Game
     uci_history << Util.to_uci from, to
     @hm_clock = irreversible ? 0 : hm_clock + 1
     @move += 1 if black?
-    @capture = board[to % 64]
     ply
 
     castling.delete 2 if {0, 4}.includes? from
@@ -69,7 +68,8 @@ class Shaq::Game
       board[a], board[b] = nil, Rook.new turn, b
     end
 
-    irreversible = piece.pawn? || board[to]
+    @capture = board[to]
+    irreversible = piece.pawn? || @capture
     update from, (promo || 0) << 6 | to, irreversible if real?
 
     board[from], board[to] = nil, piece.tap &.position = to
