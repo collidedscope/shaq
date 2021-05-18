@@ -114,7 +114,7 @@ class Shaq::Game
   end
 
   def silent_ply(from, to)
+    board[from].try &.position = to
     board.swap from, to
-    board[to].not_nil!.position = to
   end
 end
