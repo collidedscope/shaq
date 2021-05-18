@@ -16,7 +16,6 @@ describe AtomicGame do
       1 . . . . . . . .
         a b c d e f g h
       EOD
-
       ply "d5"
       pieces.size.should eq 6
       ply "exd6"
@@ -40,7 +39,6 @@ describe AtomicGame do
       1 . . . . . . . .
         a b c d e f g h
       EOD
-
       expect_raises(IllegalMoveError) { ply "Rxf3" }
     end
   end
@@ -58,7 +56,6 @@ describe AtomicGame do
       1 . . . . . . . .
         a b c d e f g h
       EOD
-
       check?.should be_false
       ply.check?.should be_false
     end
@@ -77,7 +74,6 @@ describe AtomicGame do
       1 R . . Q K B . R
         a b c d e f g h
       EOD
-
       check?.should be_true
       legal_moves.should contain({F1, A6})
       sim(F1, A6).check?.should be_false
@@ -97,7 +93,6 @@ describe AtomicGame do
       1 . . . K . . . .
         a b c d e f g h
       EOD
-
       check?.should be_false
     end
   end
@@ -115,7 +110,6 @@ describe AtomicGame do
       1 . . k K . . . .
         a b c d e f g h
       EOD
-
       check?.should be_false
     end
   end
@@ -133,7 +127,6 @@ describe AtomicGame do
       1 . k . K . . . .
         a b c d e f g h
       EOD
-
       expect_raises(IllegalMoveError) { ply "Nxf4" }
     end
   end
@@ -151,7 +144,6 @@ describe AtomicGame do
       1 R N . . K . . R
         a b c d e f g h
       EOD
-
       check?.should be_true
       checkmate?.should be_false
       legal_moves_for(king).should be_empty
@@ -173,7 +165,6 @@ describe AtomicGame do
       1 R N B . K . N R
         a b c d e f g h
       EOD
-
       checkmate?.should be_true
     end
   end
@@ -191,7 +182,6 @@ describe AtomicGame do
       1 . . . . . . k K
         a b c d e f g h
       EOD
-
       stalemate?.should be_true
     end
   end
@@ -209,7 +199,6 @@ describe AtomicGame do
       1 R . . . K . . q
         a b c d e f g h
       EOD
-
       king.can_castle?(itself, LONG_CASTLE).should be_true
       sim("O-O-O").king.position.should eq C1
     end

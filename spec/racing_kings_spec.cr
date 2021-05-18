@@ -27,7 +27,6 @@ describe RacingKingsGame do
       1 q r b n N B R Q
         a b c d e f g h
       EOD
-
       ply G7, H8
       checkmate?.should be_true
       san_history.last.should eq "Kh8#"
@@ -47,7 +46,6 @@ describe RacingKingsGame do
       1 q r b n N B R Q
         a b c d e f g h
       EOD
-
       ply G7, H8
       checkmate?.should be_false
       ply B7, A8
@@ -68,7 +66,6 @@ describe RacingKingsGame do
       1 q r b n N B R Q
         a b c d e f g h
       EOD
-
       ply B7, A8
       checkmate?.should be_true
     end
@@ -87,7 +84,6 @@ describe RacingKingsGame do
       1 . . N n N . . .
         a b c d e f g h
       EOD
-
       ply G7, F8
       checkmate?.should be_true
     end

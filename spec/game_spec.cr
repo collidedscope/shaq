@@ -44,7 +44,6 @@ describe Game do
       1 . . . . . . . .
         a b c d e f g h
       EOD
-
       # Black double-moves the Pawn, attacking and very nearly mating the King.
       ply "g5"
 
