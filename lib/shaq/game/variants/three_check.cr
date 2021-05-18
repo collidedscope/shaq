@@ -6,7 +6,7 @@ module Shaq
       super.tap &.add_tag "Variant", "Three-check"
     end
 
-    def ply
+    def ply(from : Int32, to)
       super.tap { checks[turn] += 1 if check? }
     end
 
