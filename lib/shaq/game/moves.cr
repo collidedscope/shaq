@@ -33,6 +33,7 @@ class Shaq::Game
     uci_history << Util.to_uci from, to
     @hm_clock = irreversible ? 0 : hm_clock + 1
     @move += 1 if black?
+    @capture = board[to % 64]
     ply
 
     castling.delete 2 if {0, 4}.includes? from
