@@ -50,7 +50,7 @@ class Shaq::Game
     raise "No piece at #{from}!" unless piece = board[from]
     raise IllegalMoveError.new from, to unless !real? || can_move? piece, to
 
-    board.swap to, to + (white? ? 8 : -8) if piece.pawn? && to == @ep_target
+    silent_ply to + (white? ? 8 : -8), to if piece.pawn? && to == @ep_target
     @ep_target = nil
 
     if piece.pawn?
@@ -64,8 +64,7 @@ class Shaq::Game
 
     if piece.king? && (from - to).abs == 2
       castle = {2, 58}.includes?(to) ? LONG_CASTLE : SHORT_CASTLE
-      a, b = castle[turn][:rook]
-      board[a], board[b] = nil, Rook.new turn, b
+      silent_ply *castle[turn][:rook]
     end
 
     @capture = board[to]
@@ -112,5 +111,10 @@ class Shaq::Game
 
   def ply(moves : Array(String))
     tap { moves.each &->ply(String) }
+  end
+
+  def silent_ply(from, to)
+    board.swap from, to
+    board[to].not_nil!.position = to
   end
 end
