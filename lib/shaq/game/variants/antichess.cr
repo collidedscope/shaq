@@ -14,7 +14,7 @@ module Shaq
     end
 
     def legal_moves_for(piece) : Array(Int32)
-      moves = piece.moves self
+      moves = piece.moves
       moves.select! &->occupied?(Int32) if can_capture?
       moves
     end
