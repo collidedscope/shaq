@@ -78,6 +78,7 @@ module Shaq
       type = case tags["Variant"]?
              when "Antichess"   ; AntichessGame
              when "Atomic"      ; AtomicGame
+             when "Crazyhouse"  ; CrazyhouseGame
              when "Horde"       ; HordeGame
              when "Racing Kings"; RacingKingsGame
              when "Three-check" ; ThreeCheckGame
