@@ -9,11 +9,7 @@ module Shaq
         raise InvalidFenError.new "'#{bad}' in ranks"
       end
 
-      board = ranks
-        .delete('/')
-        .gsub(/(\d)/) { "." * $1.to_i }
-        .chars.map_with_index &->Piece.from_letter(Char, Int32)
-
+      board = ranks_to_board ranks
       raise InvalidFenError.new "need exactly 64 squares" unless board.size == 64
 
       unless turn = {b: Side::Black, w: Side::White}[side]?
@@ -28,6 +24,11 @@ module Shaq
       game = new board, turn, castling, ep_target, hm_clock.to_i, move.to_i
       raise "Illegal position: King can be taken" if game.ply.check?
       game.ply.tap { |g| g.add_tag "FEN", fen unless fen == STANDARD }
+    end
+
+    def self.ranks_to_board(ranks)
+      ranks.delete('/').gsub(/(\d)/) { "." * $1.to_i }.chars
+        .map_with_index &->Piece.from_letter(Char, Int32)
     end
 
     def self.from_diagram(diagram)
