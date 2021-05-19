@@ -60,6 +60,7 @@ class Shaq::Game
       if piece.promoting?
         promo, to = to.divmod 64
         piece = {Queen, Knight, Rook, Bishop}[promo].new turn, to, self
+        piece.promoted = true
       end
     end
 

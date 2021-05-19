@@ -3,6 +3,7 @@ module Shaq
 
   abstract class Piece
     property side : Side, position : Int32
+    property? promoted = false
     property! game : Game
 
     delegate black?, white?, to: side
