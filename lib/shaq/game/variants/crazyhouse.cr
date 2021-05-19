@@ -20,6 +20,11 @@ module Shaq
       super.tap { |board| @@reserves = board.pop board.size - 64 }
     end
 
+    def self.unchecked_from_fen(board, fields)
+      @@reserves = board.pop board.size - 64
+      super.tap &.fill_pockets!
+    end
+
     def fill_pockets!
       while piece = self.class.reserves.pop?
         pockets[piece.side][piece.type] += 1
