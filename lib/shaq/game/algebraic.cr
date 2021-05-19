@@ -29,7 +29,7 @@ class Shaq::Game
 
   def algebraic_piece(piece, target)
     String.build do |s|
-      s << LETTERS[piece.class]
+      s << piece.letter.upcase
       candidates = friends piece.class
       candidates.select! { |c| legal_moves_for(c).includes? target }
       next if candidates.size == 1

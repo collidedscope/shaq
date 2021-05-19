@@ -38,10 +38,7 @@ module Shaq::Util
 
   def fenalize(board)
     board.map { |piece|
-      next '.' unless piece
-
-      letter = LETTERS[piece.class].to_s
-      piece.black? ? letter.downcase : letter
+      piece ? piece.letter : '.'
     }.join.scan(/.{8}/).map(&.[0].gsub /\.+/, &.size).join '/'
   end
 
