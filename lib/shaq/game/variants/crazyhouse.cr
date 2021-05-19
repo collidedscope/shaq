@@ -60,7 +60,7 @@ module Shaq
     def ply(move : String)
       return super unless move.match /(.?)@([a-h][1-8])/
 
-      piece = {"": -1, N: -2, B: -3, R: -4, Q: -5}[$1]
+      piece = {"": -1, P: -1, N: -2, B: -3, R: -4, Q: -5}[$1]
       tap { ply piece, Util.from_algebraic $2 }
     end
   end
