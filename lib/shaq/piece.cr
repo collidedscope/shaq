@@ -3,6 +3,8 @@ module Shaq
 
   abstract class Piece
     property side : Side, position : Int32
+    property! game : Game
+
     delegate black?, white?, to: side
     delegate color, rank, file, to: square
 
@@ -10,7 +12,7 @@ module Shaq
       {% for piece in PIECES.values %} {{piece}}; {% end %}
     end
 
-    def initialize(@side, @position)
+    def initialize(@side, @position, @game = nil)
     end
 
     def friend?(other)
@@ -21,8 +23,8 @@ module Shaq
       other.try &.side.!= side
     end
 
-    def moves(game)
-      vision(game).reject { |square| friend? game.board[square] }
+    def moves
+      vision.reject { |square| friend? game.board[square] }
     end
 
     def square
@@ -33,7 +35,7 @@ module Shaq
       pawn? && rank == PAWN_RANKS[side.other]
     end
 
-    def traverse(board, heading)
+    def traverse(heading)
       squares = [] of Int32
       now = position
 
@@ -41,14 +43,14 @@ module Shaq
         target = now + heading
         break unless Util.inbounds? now, target
         squares << (now = target)
-        break if board[now]
+        break if game.board[now]
       end
 
       squares
     end
 
-    def slider_vision(game, headings)
-      headings.flat_map { |heading| traverse game.board, heading }
+    def slider_vision(headings)
+      headings.flat_map { |heading| traverse heading }
     end
 
     {% for piece in %w[Pawn Rook Knight Bishop Queen King] %}
@@ -71,12 +73,12 @@ module Shaq
   end
 
   class Pawn < Piece
-    def vision(game)
+    def vision
       PAWN_VISION[side][position]
     end
 
-    def moves(game)
-      moves = vision(game).select { |square| enemy? game.board[square] }
+    def moves
+      moves = vision.select { |square| enemy? game.board[square] }
       forward = black? ? 8 : -8
 
       if !game.board[square = position + forward]
@@ -87,7 +89,7 @@ module Shaq
       end
 
       if ep = game.ep_target
-        moves << ep if vision(game).includes? ep
+        moves << ep if vision.includes? ep
       end
 
       return moves if rank != PAWN_RANKS[game.other_side]
@@ -96,44 +98,45 @@ module Shaq
   end
 
   class Rook < Piece
-    def vision(game)
-      slider_vision game, [-8, -1, 1, 8]
+    def vision
+      slider_vision [-8, -1, 1, 8]
     end
   end
 
   class Knight < Piece
-    def vision(game)
+    def vision
       KNIGHT_VISION[position]
     end
   end
 
   class Bishop < Piece
-    def vision(game)
-      slider_vision game, [-9, -7, 7, 9]
+    def vision
+      slider_vision [-9, -7, 7, 9]
     end
   end
 
   class Queen < Piece
-    def vision(game)
-      slider_vision game, ROYAL
+    def vision
+      slider_vision ROYAL
     end
   end
 
   class King < Piece
-    def vision(game)
+    def vision
       Util.moore_neighborhood position
     end
 
-    def moves(game)
+    def moves
       moves = super
-      moves << LONG_CASTLE[side][:king] if can_castle? game, LONG_CASTLE
-      moves << SHORT_CASTLE[side][:king] if can_castle? game, SHORT_CASTLE
+      moves << LONG_CASTLE[side][:king] if can_castle? LONG_CASTLE
+      moves << SHORT_CASTLE[side][:king] if can_castle? SHORT_CASTLE
 
-      moves.reject! &->game.occupied?(Int32) if game.atomic?
+      # TODO: This could be cleaner if the &-> sugar did property lookup.
+      moves.reject! { |square| game.occupied? square } if game.atomic?
       moves
     end
 
-    def can_castle?(game, distance)
+    def can_castle?(distance)
       return false if game.check?
       return false unless game.castling.includes? distance[side][:king]
 

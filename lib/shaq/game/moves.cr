@@ -3,6 +3,7 @@ class Shaq::Game
     dup.tap { |fake|
       fake.board = board.map &.dup
       fake.real = false
+      fake.own_pieces!
     }
   end
 
@@ -11,7 +12,7 @@ class Shaq::Game
   end
 
   def legal_moves_for(piece) : Array(Int32)
-    piece.moves(self).reject { |square| sim(piece, square).check? }
+    piece.moves.reject { |square| sim(piece, square).check? }
   end
 
   def legal_moves
@@ -58,7 +59,7 @@ class Shaq::Game
 
       if piece.promoting?
         promo, to = to.divmod 64
-        piece = {Queen, Knight, Rook, Bishop}[promo].new turn, to
+        piece = {Queen, Knight, Rook, Bishop}[promo].new turn, to, self
       end
     end
 

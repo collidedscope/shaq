@@ -24,11 +24,11 @@ class Shaq::Game
   end
 
   def vision
-    friends.flat_map &.vision self
+    friends.flat_map &.vision
   end
 
   def enemy_vision
-    enemies.flat_map &.vision self
+    enemies.flat_map &.vision
   end
 
   def attacked?(square)

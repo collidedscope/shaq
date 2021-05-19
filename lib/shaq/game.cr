@@ -22,10 +22,15 @@ module Shaq
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
       @initial_move = move
       san_history << "..." if black?
+      own_pieces!
     end
 
     def self.new
       from_fen STANDARD
+    end
+
+    def own_pieces!
+      board.each &.try &.game = self
     end
   end
 end

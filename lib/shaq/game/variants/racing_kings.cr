@@ -6,7 +6,7 @@ module Shaq
     end
 
     def legal_moves_for(piece)
-      piece.moves(self).reject { |square|
+      piece.moves.reject { |square|
         sim = sim piece, square
         sim.check? || sim.ply.check?
       }

@@ -199,7 +199,7 @@ describe AtomicGame do
       1 R . . . K . . q
         a b c d e f g h
       EOD
-      king.can_castle?(itself, LONG_CASTLE).should be_true
+      king.can_castle?(LONG_CASTLE).should be_true
       sim("O-O-O").king.position.should eq C1
     end
   end
