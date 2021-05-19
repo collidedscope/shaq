@@ -5,6 +5,11 @@ module Shaq
       game.tap &.add_tag "Variant", "Horde"
     end
 
+    def initialize(*args)
+      super
+      add_tag "Variant", "Horde"
+    end
+
     def check?
       black? && super
     end

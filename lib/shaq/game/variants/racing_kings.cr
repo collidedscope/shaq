@@ -5,6 +5,11 @@ module Shaq
       game.tap &.add_tag "Variant", "Racing Kings"
     end
 
+    def initialize(*args)
+      super
+      add_tag "Variant", "Racing Kings"
+    end
+
     def legal_moves_for(piece)
       piece.moves.reject { |square|
         sim = sim piece, square

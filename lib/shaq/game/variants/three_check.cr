@@ -6,6 +6,11 @@ module Shaq
       super.tap &.add_tag "Variant", "Three-check"
     end
 
+    def initialize(*args)
+      super
+      add_tag "Variant", "Three-check"
+    end
+
     def update
       super.tap { checks[turn] += 1 if check? }
     end

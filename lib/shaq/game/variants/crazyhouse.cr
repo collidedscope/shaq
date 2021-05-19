@@ -9,6 +9,11 @@ module Shaq
       super.tap &.add_tag "Variant", "Crazyhouse"
     end
 
+    def initialize(*args)
+      super
+      add_tag "Variant", "Crazyhouse"
+    end
+
     def update(*args)
       super
 

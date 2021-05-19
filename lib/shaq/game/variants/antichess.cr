@@ -1,8 +1,12 @@
 module Shaq
   class AntichessGame < Game
     def self.new
-      game = from_fen STANDARD
-      game.tap &.add_tag "Variant", "Antichess"
+      super.tap &.add_tag "Variant", "Antichess"
+    end
+
+    def initialize(*args)
+      super
+      add_tag "Variant", "Antichess"
     end
 
     def check?

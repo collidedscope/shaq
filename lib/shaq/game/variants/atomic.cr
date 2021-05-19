@@ -1,8 +1,12 @@
 module Shaq
   class AtomicGame < Game
     def self.new
-      game = from_fen STANDARD
-      game.tap &.add_tag "Variant", "Atomic"
+      super.tap &.add_tag "Variant", "Atomic"
+    end
+
+    def initialize(*args)
+      super
+      add_tag "Variant", "Atomic"
     end
 
     def ply(from : Int32, to)
