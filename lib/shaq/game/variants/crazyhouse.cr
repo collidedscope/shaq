@@ -1,5 +1,6 @@
 module Shaq
   class CrazyhouseGame < Game
+    class_property! reserves : Array(Piece?)
     property pockets = {
       Side::Black => Material.new(0),
       Side::White => Material.new(0),
@@ -11,7 +12,18 @@ module Shaq
 
     def initialize(*args)
       super
+      fill_pockets!
       add_tag "Variant", "Crazyhouse"
+    end
+
+    def self.ranks_to_board(ranks)
+      super.tap { |board| @@reserves = board.pop board.size - 64 }
+    end
+
+    def fill_pockets!
+      self.class.reserves.each do |piece|
+        pockets[piece.side][piece.type] += 1 if piece
+      end
     end
 
     def update(*args)
