@@ -21,8 +21,8 @@ module Shaq
     end
 
     def fill_pockets!
-      self.class.reserves.each do |piece|
-        pockets[piece.side][piece.type] += 1 if piece
+      while piece = self.class.reserves.pop?
+        pockets[piece.side][piece.type] += 1
       end
     end
 
