@@ -40,6 +40,19 @@ module Shaq
       end
     end
 
+    def legal_moves
+      moves = super
+      unoccupied = 64.times.reject(&->occupied?(Int32)).to_a
+
+      pockets[turn].each do |type, count|
+        if count > 0
+          moves.concat unoccupied.map { |square| {type.to_i - 6, square} }
+        end
+      end
+
+      moves
+    end
+
     def algebraic_move(from, to)
       return super unless from < 0
 
