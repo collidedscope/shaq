@@ -19,11 +19,7 @@ class Shaq::Game
       s << '=' << "QNRB"[promo] if piece.promoting?
 
       g = sim(from, promo << 6 | to).ply
-      if g.checkmate?
-        s << '#'
-      elsif g.check?
-        s << '+'
-      end
+      s << (g.checkmate? ? '#' : g.check? ? '+' : "")
     end
   end
 
