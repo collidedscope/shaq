@@ -43,7 +43,7 @@ module Shaq
     def legal_moves
       moves = super
       unoccupied = 64.times.reject(&->occupied?(Int32)).to_a
-      unoccupied.reject! { |square| sim(-1, square).check? } if real? && check?
+      unoccupied.reject! { |square| sim(-1, square).check? } if check?
 
       pockets[turn].each do |type, count|
         if count > 0
