@@ -43,7 +43,13 @@ module Shaq
     def algebraic_move(from, to)
       return super unless from < 0
 
-      "#{PIECES.keys[from] if from < -1}@#{Util.to_algebraic to}"
+      String.build do |s|
+        s << PIECES.keys[from] if from < -1
+        s << '@' << Util.to_algebraic to
+
+        g = sim(from, to).ply
+        s << (g.checkmate? ? '#' : g.check? ? '+' : "")
+      end
     end
 
     def ply(from : Int32, to)
