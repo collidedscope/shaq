@@ -11,6 +11,10 @@ module Shaq
 
     enum Type
       {% for piece in PIECES.values %} {{piece}}; {% end %}
+
+      def letter(side)
+        "kqrbnpKQRBNP"[side.value * 6 + value]
+      end
     end
 
     def initialize(@side, @position, @game = nil)

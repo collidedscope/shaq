@@ -93,7 +93,7 @@ module Shaq
     def write_ranks(io)
       reserves = pockets.map { |side, pocket|
         pocket.map { |type, count|
-          ["kqrbnpKQRBNP"[side.value * 6 + type.to_i]] * count
+          Array.new count, type.letter side
         }
       }.flatten
 
