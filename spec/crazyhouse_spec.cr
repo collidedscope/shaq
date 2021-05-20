@@ -120,4 +120,24 @@ describe CrazyhouseGame do
       check?.should be_false
     end
   end
+
+  it "knows drops are allowed to checkmate the King" do
+    subject CrazyhouseGame.from_diagram <<-EOD do
+      w KQ - 46 24
+      8 . . . . . k . r
+      7 p b . r n . p p
+      6 n p p . P b . .
+      5 . . . . Q P . .
+      4 . . . . . . . .
+      3 . . P . . . P N
+      2 P . P P B P P P
+      1 R . B . K . . R
+      0 p Q N
+        a b c d e f g h
+      EOD
+      ply -5, F7
+      checkmate?.should be_true
+      san_history.last.should eq "Q@f7#"
+    end
+  end
 end
