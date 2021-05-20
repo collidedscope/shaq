@@ -31,12 +31,16 @@ class Shaq::Game
     end
   end
 
-  def inspect(io)
+  def write_ranks(io)
     board.each_slice(8).with_index do |rank, i|
       io << (8 - i) << ' ' << rank.map { |piece|
         piece.try &.letter || '.'
       }.join(' ') << '\n'
     end
+  end
+
+  def inspect(io)
+    write_ranks io
     io << "  a b c d e f g h"
   end
 
