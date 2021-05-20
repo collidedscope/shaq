@@ -54,15 +54,17 @@ module Shaq
 
     def ply(from : Int32, to)
       return super unless from < 0
-      raise IllegalMoveError.new "drop to occupied square" if occupied? to
+      raise IllegalMoveError.new "drop to occupied square" if real? && occupied? to
 
       type = Piece::Type.from_value 6 + from
       raise IllegalMoveError.new "no #{type} to drop" if pockets[turn][type] < 1
 
-      pockets[turn][type] -= 1
       board[to] = PIECES.values[from].new turn, to, self
 
+      return self unless real?
+
       san_history << algebraic_move from, to
+      pockets[turn][type] -= 1
       @hm_clock = from == -1 ? 0 : hm_clock + 1
       @move += 1 if black?
       ply
