@@ -53,12 +53,71 @@ describe CrazyhouseGame do
       0 N B p p p N
         a b c d e f g h
       EOD
-
       pockets[Side::Black].should eq({Piece::Type::Pawn => 3})
       pockets[Side::White].should eq({
         Piece::Type::Bishop => 1,
         Piece::Type::Knight => 2,
       })
+    end
+  end
+
+  it "allows pieces to be dropped from the pocket" do
+    subject CrazyhouseGame.from_diagram <<-EOD do
+      w KQkq - 0 4
+      8 r . b . k b n r
+      7 p p p . p p p p
+      6 . . n . . . . .
+      5 . . . q . . . .
+      4 . . . P . . . .
+      3 . . . . . . . .
+      2 P P P . P P P P
+      1 R . B Q K B N R
+      0 n P
+        a b c d e f g h
+      EOD
+      ply -1, 11
+      check?.should be_true
+      san_history.last.should eq "@d7+"
+      pockets[Side::White][Piece::Type::Pawn].should eq 0
+    end
+  end
+
+  it "ensures the pocket actually contains the piece being dropped" do
+    subject CrazyhouseGame.from_diagram <<-EOD do
+      w KQkq - 0 4
+      8 r n b q k b n r
+      7 p p p p p p p p
+      6 . . . . . . . .
+      5 . . . . . . . .
+      4 . . . . . . . .
+      3 . . . . . . . .
+      2 P P P P P P P P
+      1 R N B Q K B N R
+      0
+        a b c d e f g h
+      EOD
+      expect_raises(IllegalMoveError, "no Knight to drop") { ply "N@d4" }
+    end
+  end
+
+  it "knows drops are allowed to block check" do
+    subject CrazyhouseGame.from_diagram <<-EOD do
+      w KQkq - 0 1
+      8 r n b . k b n r
+      7 p p . p p p p p
+      6 . . . . . . . .
+      5 . . P . . . . .
+      4 . . . . . . . .
+      3 . . q . . . . .
+      2 . . . . P P P P
+      1 . . . B K B N R
+      0 R P N
+        a b c d e f g h
+      EOD
+      check?.should be_true
+      legal_moves.sort.should eq [{-4, 51}, {-2, 51}, {-1, 51}]
+      ply "R@d2"
+      check?.should be_false
     end
   end
 end
