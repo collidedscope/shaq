@@ -89,6 +89,17 @@ module Shaq
       piece = {"": -1, P: -1, N: -2, B: -3, R: -4, Q: -5}[$1]
       tap { ply piece, Util.from_algebraic $2 }
     end
+
+    def write_ranks(io)
+      reserves = pockets.map { |side, pocket|
+        pocket.map { |type, count|
+          ["kqrbnpKQRBNP"[side.value * 6 + type.to_i]] * count
+        }
+      }.flatten
+
+      super
+      io << "0 " << reserves.join(' ') << '\n'
+    end
   end
 
   class Game
