@@ -1,13 +1,6 @@
 module Shaq
   class AntichessGame < Game
-    def self.new
-      super.tap &.add_tag "Variant", "Antichess"
-    end
-
-    def initialize(*args)
-      super
-      add_tag "Variant", "Antichess"
-    end
+    class_property variant = "Antichess"
 
     def check?
       false

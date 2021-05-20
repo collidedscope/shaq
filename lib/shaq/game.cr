@@ -1,5 +1,3 @@
-require "shaq/game/**"
-
 module Shaq
   class Game
     alias Position = Tuple(String, Side, Array(Int32), Int32?)
@@ -32,5 +30,18 @@ module Shaq
     def own_pieces!
       board.each &.try &.game = self
     end
+
+    macro inherited
+      def self.new
+        super.tap &.add_tag "Variant", variant
+      end
+
+      def initialize(*args)
+        super
+        add_tag "Variant", self.class.variant
+      end
+    end
   end
 end
+
+require "shaq/game/**"

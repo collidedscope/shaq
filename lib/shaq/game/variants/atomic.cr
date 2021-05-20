@@ -1,13 +1,6 @@
 module Shaq
   class AtomicGame < Game
-    def self.new
-      super.tap &.add_tag "Variant", "Atomic"
-    end
-
-    def initialize(*args)
-      super
-      add_tag "Variant", "Atomic"
-    end
+    class_property variant = "Atomic"
 
     def ply(from : Int32, to)
       super

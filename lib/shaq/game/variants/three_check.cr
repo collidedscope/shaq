@@ -1,15 +1,7 @@
 module Shaq
   class ThreeCheckGame < Game
+    class_property variant = "Three-check"
     property checks = {Side::Black => 0, Side::White => 0}
-
-    def self.new
-      super.tap &.add_tag "Variant", "Three-check"
-    end
-
-    def initialize(*args)
-      super
-      add_tag "Variant", "Three-check"
-    end
 
     def update
       super.tap { checks[turn] += 1 if check? }

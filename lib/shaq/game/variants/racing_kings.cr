@@ -1,13 +1,10 @@
 module Shaq
   class RacingKingsGame < Game
+    class_property variant = "Racing Kings"
+
     def self.new
       game = from_fen "8/8/8/8/8/8/krbnNBRK/qrbnNBRQ w - - 0 1"
       game.tap &.add_tag "Variant", "Racing Kings"
-    end
-
-    def initialize(*args)
-      super
-      add_tag "Variant", "Racing Kings"
     end
 
     def legal_moves_for(piece)

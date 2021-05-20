@@ -1,19 +1,16 @@
 module Shaq
   class CrazyhouseGame < Game
+    class_property variant = "Crazyhouse"
     class_property! reserves : Array(Piece?)
     property pockets = {
       Side::Black => Material.new(0),
       Side::White => Material.new(0),
     }
 
-    def self.new
-      super.tap &.add_tag "Variant", "Crazyhouse"
-    end
-
     def initialize(*args)
       super
-      fill_pockets!
       add_tag "Variant", "Crazyhouse"
+      fill_pockets!
     end
 
     def self.ranks_to_board(ranks)
