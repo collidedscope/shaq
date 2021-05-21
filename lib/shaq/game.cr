@@ -40,6 +40,8 @@ module Shaq
         super
         add_tag "Variant", self.class.variant
       end
+
+      VARIANTS[variant] = self
     end
   end
 end

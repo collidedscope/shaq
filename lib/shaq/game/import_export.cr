@@ -76,15 +76,7 @@ module Shaq
     end
 
     def self.from_tags(tags)
-      type = case tags["Variant"]?
-             when "Antichess"   ; AntichessGame
-             when "Atomic"      ; AtomicGame
-             when "Crazyhouse"  ; CrazyhouseGame
-             when "Horde"       ; HordeGame
-             when "Racing Kings"; RacingKingsGame
-             when "Three-check" ; ThreeCheckGame
-             else                 Game
-             end
+      type = VARIANTS.fetch tags["Variant"], Game
 
       if fen = tags["FEN"]?
         type.from_fen fen
