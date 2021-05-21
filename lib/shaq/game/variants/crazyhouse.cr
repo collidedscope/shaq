@@ -1,8 +1,8 @@
 module Shaq
   class CrazyhouseGame < Game
-    class_property variant = "Crazyhouse"
-    class_property! reserves : Array(Piece?)
-    property pockets = {
+    class_getter variant = "Crazyhouse"
+    class_getter! reserves : Array(Piece?)
+    getter pockets = {
       Side::Black => Material.new(0),
       Side::White => Material.new(0),
     }

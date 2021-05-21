@@ -1,6 +1,6 @@
 module Shaq
   class AntichessGame < Game
-    class_property variant = "Antichess"
+    class_getter variant = "Antichess"
 
     def check?
       false

@@ -56,7 +56,7 @@ module Shaq
 
   OPENING_TREE = "#{__DIR__}/../data/opening_tree.yaml.gz"
 
-  class_property opening_tree : YAML::Any do
+  class_getter opening_tree : YAML::Any do
     Compress::Gzip::Reader.open OPENING_TREE, &->YAML.parse(IO)
   end
 end

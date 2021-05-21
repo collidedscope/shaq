@@ -1,6 +1,6 @@
 module Shaq
   class ThreeCheckGame < Game
-    class_property variant = "Three-check"
+    class_getter variant = "Three-check"
     property checks = {Side::Black => 0, Side::White => 0}
 
     def update

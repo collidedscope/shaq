@@ -1,6 +1,6 @@
 module Shaq
   class HordeGame < Game
-    class_property variant = "Horde"
+    class_getter variant = "Horde"
 
     def self.new
       game = from_fen "rnbqkbnr/pppppppp/8/1PP2PP1#{"/PPPPPPPP" * 4} w kq - 0 1"

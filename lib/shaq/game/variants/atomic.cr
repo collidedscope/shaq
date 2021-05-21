@@ -1,6 +1,6 @@
 module Shaq
   class AtomicGame < Game
-    class_property variant = "Atomic"
+    class_getter variant = "Atomic"
 
     def ply(from : Int32, to)
       super

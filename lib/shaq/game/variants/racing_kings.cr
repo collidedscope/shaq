@@ -1,6 +1,6 @@
 module Shaq
   class RacingKingsGame < Game
-    class_property variant = "Racing Kings"
+    class_getter variant = "Racing Kings"
 
     def self.new
       game = from_fen "8/8/8/8/8/8/krbnNBRK/qrbnNBRQ w - - 0 1"

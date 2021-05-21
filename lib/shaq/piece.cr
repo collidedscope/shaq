@@ -2,7 +2,8 @@ module Shaq
   alias Material = Hash(Piece::Type, Int32)
 
   abstract class Piece
-    property side : Side, position : Int32
+    getter side : Side
+    property position : Int32
     property? promoted = false
     property! game : Game
 

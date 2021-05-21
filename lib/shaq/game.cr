@@ -2,9 +2,9 @@ module Shaq
   class Game
     alias Position = Tuple(String, Side, Array(Int32), Int32?)
 
+    property board : Array(Piece?)
     property? real = true
-    property \
-      board : Array(Piece?),
+    getter \
       turn : Side,
       castling : Array(Int32),
       ep_target : Int32?,
