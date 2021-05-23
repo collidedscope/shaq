@@ -31,17 +31,23 @@ module Shaq
       board.each &.try &.game = self
     end
 
-    macro inherited
+    macro variant(name)
       def self.new
-        super.tap &.add_tag "Variant", variant
+        super.tap &.add_tag "Variant", {{name}}
       end
 
       def initialize(*args)
         super
-        add_tag "Variant", self.class.variant
+        add_tag "Variant", {{name}}
       end
 
-      VARIANTS[variant] = self
+      class Shaq::Game
+        def {{name.downcase.tr("-", " ").split.join('_').id}}?
+          is_a? {{@type}}
+        end
+      end
+
+      VARIANTS[{{name}}] = self
     end
   end
 end

@@ -1,6 +1,7 @@
 module Shaq
   class CrazyhouseGame < Game
-    class_getter variant = "Crazyhouse"
+    variant "Crazyhouse"
+
     class_getter! reserves : Array(Piece?)
     getter pockets = {
       Side::Black => Material.new(0),
@@ -98,12 +99,6 @@ module Shaq
 
       super
       io << "0 " << reserves.join(' ') << '\n'
-    end
-  end
-
-  class Game
-    def crazyhouse?
-      is_a? CrazyhouseGame
     end
   end
 end

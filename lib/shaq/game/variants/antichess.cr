@@ -1,6 +1,6 @@
 module Shaq
   class AntichessGame < Game
-    class_getter variant = "Antichess"
+    variant "Antichess"
 
     def check?
       false
@@ -14,12 +14,6 @@ module Shaq
       moves = piece.moves
       moves.select! &->occupied?(Int32) if can_capture?
       moves
-    end
-  end
-
-  class Game
-    def antichess?
-      is_a? AntichessGame
     end
   end
 end

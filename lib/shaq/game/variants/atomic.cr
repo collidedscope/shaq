@@ -1,6 +1,6 @@
 module Shaq
   class AtomicGame < Game
-    class_getter variant = "Atomic"
+    variant "Atomic"
 
     def ply(from : Int32, to)
       super
@@ -45,12 +45,6 @@ module Shaq
         # OR doesn't leave us in check, with the former having higher priority.
         sim.ply.no_king? || !sim.ply.check? unless sim.no_king?
       }
-    end
-  end
-
-  class Game
-    def atomic?
-      is_a? AtomicGame
     end
   end
 end

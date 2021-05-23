@@ -1,6 +1,6 @@
 module Shaq
   class RacingKingsGame < Game
-    class_getter variant = "Racing Kings"
+    variant "Racing Kings"
 
     def self.new
       game = from_fen "8/8/8/8/8/8/krbnNBRK/qrbnNBRQ w - - 0 1"
@@ -23,12 +23,6 @@ module Shaq
 
     def draw?
       board.select(King).all? &.rank.== 8
-    end
-  end
-
-  class Game
-    def racing_kings?
-      is_a? RacingKingsGame
     end
   end
 end
