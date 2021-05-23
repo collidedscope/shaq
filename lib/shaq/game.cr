@@ -3,6 +3,7 @@ module Shaq
     alias Position = Tuple(String, Side, Array(Int32), Int32?)
 
     property board : Array(Piece?)
+    property tags = {} of String => String
     property? real = true
     getter \
       turn : Side,
@@ -14,8 +15,7 @@ module Shaq
       capture : Piece?,
       san_history = [] of String,
       uci_history = [] of String,
-      positions = Hash(Position, Int32).new(0),
-      tags = {} of String => String
+      positions = Hash(Position, Int32).new(0)
 
     def initialize(@board, @turn, @castling, @ep_target, @hm_clock, @move)
       @initial_move = move
