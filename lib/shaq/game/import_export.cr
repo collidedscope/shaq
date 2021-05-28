@@ -1,3 +1,5 @@
+require "http/client"
+
 module Shaq
   class Game
     def self.from_fen(fen)
@@ -87,6 +89,13 @@ module Shaq
 
     def self.from_pgn_file(path)
       File.open(path) { |f| from_pgn_io f }.not_nil!
+    end
+
+    def self.from_lichess(id)
+      HTTP::Client.get "https://lichess.org/game/export/#{id}" do |resp|
+        raise "Invalid lichess game ID" unless resp.success?
+        from_pgn_io resp.body_io
+      end
     end
 
     def add_tag(key, value)
