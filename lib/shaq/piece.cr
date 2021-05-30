@@ -41,6 +41,10 @@ module Shaq
       pawn? && rank == PAWN_RANKS[side.other]
     end
 
+    def turncloak!
+      tap { @side = side.other }
+    end
+
     def traverse(heading)
       squares = [] of Int32
       now = position
