@@ -28,7 +28,7 @@ module Shaq
     end
 
     def own_pieces!
-      board.each &.try &.game = self
+      pieces.each &.game = self
     end
 
     macro variant(name)
