@@ -78,7 +78,7 @@ module Shaq
     end
 
     def self.from_tags(tags)
-      type = VARIANTS.fetch tags["Variant"], Game
+      type = VARIANTS.fetch tags["Variant"]?, Game
 
       if fen = tags["FEN"]?
         type.from_fen fen
