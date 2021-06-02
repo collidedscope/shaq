@@ -37,10 +37,6 @@ module Shaq
       Square.new position
     end
 
-    def turncloak!
-      tap { @side = side.other }
-    end
-
     def cloak
       nil
     end
