@@ -34,6 +34,12 @@ module Shaq
     end
   end
 
+  enum Promotion
+    KnightP = 1 << 6
+    RookP   = 2 << 6
+    BishopP = 3 << 6
+  end
+
   def self.load_pgn(path)
     games = [] of Game
 

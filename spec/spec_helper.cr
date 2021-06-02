@@ -19,3 +19,4 @@ end
 
 include Shaq
 Square.expose_values
+Promotion.expose_values
