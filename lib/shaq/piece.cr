@@ -2,7 +2,7 @@ module Shaq
   alias Material = Hash(Piece::Type, Int32)
 
   abstract class Piece
-    getter side : Side
+    property side : Side
     property position : Int32
     property? promoted = false
     property! game : Game
@@ -43,6 +43,14 @@ module Shaq
 
     def turncloak!
       tap { @side = side.other }
+    end
+
+    def cloak
+      nil
+    end
+
+    def disrobe
+      raise "unreachable"
     end
 
     def traverse(heading)
@@ -172,6 +180,35 @@ module Shaq
 
       def sided_symbol
         symbol - 6 * side.value
+      end
+
+      def encloak(piece)
+        pc = c = Cloaked{{piece}}.new(side, position, game).tap &.cloak= piece
+
+        # Cloaks can stack, so we need to update the entire chain.
+        while c = c.cloak
+          c.side = side
+        end
+
+        pc
+      end
+    end
+
+    class Cloaked{{piece}} < {{piece}}
+      property! cloak : Piece
+
+      def vision
+        super | cloak.tap(&.game = game).vision
+      end
+
+      def disrobe
+        {{piece}}.new side, position, game
+      end
+
+      def moves
+        moves = super | cloak.tap(&.game = game).moves
+        moves.reject! { |m| m > 63 } unless pawn?
+        moves
       end
     end
   {% end %}
