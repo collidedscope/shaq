@@ -128,7 +128,7 @@ describe CloakDaggerGame do
 
       # Queen then takes the Knight-cloaked Pawn, but doesn't get Knight moves.
       ply "Qxe4"
-      board[E4].not_nil!.moves.includes?(D6).should be_false
+      board[E4].not_nil!.moves.should_not contain D6
     end
   end
 
@@ -149,7 +149,7 @@ describe CloakDaggerGame do
 
       # Pawn takes the Knight, and can thus make Knight moves (only).
       ply "dxe4"
-      board[E4].not_nil!.moves.includes?(E3).should be_false
+      board[E4].not_nil!.moves.should_not contain E3
 
       # Queen then takes the Knight-cloaked Pawn, which is really dumb.
       ply "Qxe4"
