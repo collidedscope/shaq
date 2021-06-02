@@ -198,10 +198,17 @@ module Shaq
       end
 
       def moves
-        moves = super | cloak.tap(&.game = game).moves
-        moves.reject! { |m| m > 63 } unless pawn?
-        moves
+        super | cloak.tap(&.game = game).moves.reject &.> 63
       end
     end
   {% end %}
+
+  class CloakedPawn
+    def moves
+      previous_def.flat_map { |move|
+        next move if 8 - move // 8 != BACK_RANKS[side.other]
+        Array.new(4) { |i| i << 6 | move }
+      }
+    end
+  end
 end
