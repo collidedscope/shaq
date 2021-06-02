@@ -106,4 +106,54 @@ describe CloakDaggerGame do
       expect_raises(IllegalMoveError) { ply C7, C8 | RookP }
     end
   end
+
+  it "doesn't stack cloaks in anything but Stack mode" do
+    subject CloakDaggerGame.from_diagram <<-EOD do
+      b - - 0 1
+      8 k . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . p . . . .
+      4 . . . . N . . .
+      3 . . . . . . . .
+      2 . . Q . . . . .
+      1 . . . . . . . K
+        a b c d e f g h
+      EOD
+      itself.mode = CloakDaggerGame::CloakingMode::Augment
+
+      # Pawn takes the Knight, and can thus make Knight moves.
+      ply "dxe4"
+      board[E4].not_nil!.moves.size.should eq 9
+
+      # Queen then takes the Knight-cloaked Pawn, but doesn't get Knight moves.
+      ply "Qxe4"
+      board[E4].not_nil!.moves.includes?(D6).should be_false
+    end
+  end
+
+  it "swaps the capturer's moveset for that of the captured in Replace mode" do
+    subject CloakDaggerGame.from_diagram <<-EOD do
+      b - - 0 1
+      8 k . . . . . . .
+      7 . . . . . . . .
+      6 . . . . . . . .
+      5 . . . p . . . .
+      4 . . . . N . . .
+      3 . . . . . . . .
+      2 . . Q . . . . .
+      1 . . . . . . . K
+        a b c d e f g h
+      EOD
+      itself.mode = CloakDaggerGame::CloakingMode::Replace
+
+      # Pawn takes the Knight, and can thus make Knight moves (only).
+      ply "dxe4"
+      board[E4].not_nil!.moves.includes?(E3).should be_false
+
+      # Queen then takes the Knight-cloaked Pawn, which is really dumb.
+      ply "Qxe4"
+      board[E4].not_nil!.moves.should eq [E5]
+    end
+  end
 end
