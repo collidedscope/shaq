@@ -79,7 +79,7 @@ class Shaq::Game
   end
 
   def ply(piece : Piece, target)
-    ply piece.position, target
+    ply piece.position & 63, target
   end
 
   def ply(move : String)

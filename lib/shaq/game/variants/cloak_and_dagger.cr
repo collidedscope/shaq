@@ -17,8 +17,8 @@ module Shaq
         board[e.position] = e.disrobe
       end
 
-      if (piece = capture) && (mover = board[to])
-        board[to] = mover.encloak piece
+      if (piece = capture) && (mover = board[to & 63])
+        board[to & 63] = mover.encloak piece
       end
 
       self

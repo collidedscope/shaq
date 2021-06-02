@@ -17,7 +17,7 @@ module Shaq
     end
 
     def initialize(from, to)
-      super "Illegal move: #{Util.to_algebraic from} -> #{Util.to_algebraic to}"
+      super "Illegal move: #{Util.to_algebraic from} -> #{Util.to_algebraic to & 63}"
     end
   end
 end
