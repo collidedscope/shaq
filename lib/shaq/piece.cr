@@ -37,10 +37,6 @@ module Shaq
       Square.new position
     end
 
-    def promoting?
-      pawn? && rank == PAWN_RANKS[side.other]
-    end
-
     def turncloak!
       tap { @side = side.other }
     end

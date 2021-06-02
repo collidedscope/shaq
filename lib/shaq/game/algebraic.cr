@@ -16,7 +16,7 @@ class Shaq::Game
 
       s << 'x' if board[to]
       s << Util.to_algebraic to unless castling
-      s << '=' << "QNRB"[promo] if piece.promoting?
+      s << '=' << "QNRB"[promo] if promo << 6 | to > 63
 
       g = sim(from, promo << 6 | to).ply
       s << (g.checkmate? ? '#' : g.check? ? '+' : "")
