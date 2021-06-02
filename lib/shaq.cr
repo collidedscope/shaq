@@ -35,6 +35,7 @@ module Shaq
   end
 
   enum Promotion
+    QueenP  = 0
     KnightP = 1 << 6
     RookP   = 2 << 6
     BishopP = 3 << 6
