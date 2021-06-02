@@ -42,7 +42,7 @@ module Shaq
     end
 
     def disrobe
-      raise "unreachable"
+      self
     end
 
     def traverse(heading)
@@ -175,6 +175,7 @@ module Shaq
       end
 
       def encloak(piece)
+        piece = piece.disrobe unless game.as(CloakDaggerGame).mode.stack?
         pc = c = Cloaked{{piece}}.new(side, position, game).tap &.cloak= piece
 
         # Cloaks can stack, so we need to update the entire chain.
@@ -190,7 +191,12 @@ module Shaq
       property! cloak : Piece
 
       def vision
-        super | cloak.tap(&.game = game).vision
+        other = cloak.tap(&.game = game).vision
+        if game.as(CloakDaggerGame).mode.replace?
+          other
+        else
+          super | other
+        end
       end
 
       def disrobe
@@ -198,7 +204,12 @@ module Shaq
       end
 
       def moves
-        super | cloak.tap(&.game = game).moves.reject &.> 63
+        other = cloak.tap(&.game = game).moves.reject &.> 63
+        if game.as(CloakDaggerGame).mode.replace?
+          other
+        else
+          super | other
+        end
       end
     end
   {% end %}

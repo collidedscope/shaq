@@ -2,6 +2,14 @@ module Shaq
   class CloakDaggerGame < Game
     variant "Cloak and Dagger"
 
+    enum CloakingMode
+      Augment
+      Replace
+      Stack
+    end
+
+    property mode = CloakingMode::Stack
+
     def friends(piece)
       friends.select &.class.<= piece
     end
