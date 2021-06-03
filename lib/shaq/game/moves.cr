@@ -59,7 +59,7 @@ class Shaq::Game
 
       if 8 - to % 64 // 8 == BACK_RANKS[other_side]
         promo, to = to.divmod 64
-        piece = {Queen, Knight, Rook, Bishop}[promo].new turn, to, self
+        piece = {Queen, Knight, Rook, Bishop, King}[promo].new turn, to, self
         piece.promoted = true
       end
     end

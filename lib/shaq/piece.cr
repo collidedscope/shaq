@@ -103,7 +103,8 @@ module Shaq
       end
 
       return moves if rank != PAWN_RANKS[game.other_side]
-      moves.flat_map { |move| Array.new(4) { |i| i << 6 | move } }
+      n = game.extinction? ? 5 : 4
+      moves.flat_map { |move| Array.new(n) { |i| i << 6 | move } }
     end
   end
 
@@ -216,9 +217,10 @@ module Shaq
 
   class CloakedPawn
     def moves
+      n = game.extinction? ? 5 : 4
       previous_def.flat_map { |move|
         next move if 8 - move // 8 != BACK_RANKS[side.other]
-        Array.new(4) { |i| i << 6 | move }
+        Array.new(n) { |i| i << 6 | move }
       }
     end
   end
