@@ -51,7 +51,7 @@ describe CloakDaggerGame do
       EOD
       # Pawn takes the Knight, and can thus make Knight moves.
       ply "dxe4"
-      board[E4].not_nil!.moves.size.should eq 9
+      board[E4].not_nil!.moves.should contain_all KNIGHT_VISION[E4]
 
       # Queen then takes the Knight-cloaked Pawn.
       ply "Qxe4"
@@ -124,7 +124,7 @@ describe CloakDaggerGame do
 
       # Pawn takes the Knight, and can thus make Knight moves.
       ply "dxe4"
-      board[E4].not_nil!.moves.size.should eq 9
+      board[E4].not_nil!.moves.should contain_all KNIGHT_VISION[E4]
 
       # Queen then takes the Knight-cloaked Pawn, but doesn't get Knight moves.
       ply "Qxe4"

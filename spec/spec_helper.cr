@@ -1,5 +1,6 @@
 require "spec"
 require "shaq"
+require "shaq/core_ext/spec"
 
 struct Enum
   macro expose_values
