@@ -7,9 +7,9 @@ module Shaq
     end
 
     def checkmate?
-      if friends.map(&.type).uniq.size == 6
+      if friends.uniq(&.type).size == 6
         false
-      elsif enemies.map(&.type).uniq.size < 6
+      elsif enemies.uniq(&.type).size < 6
         capture.not_nil!.side == turn
       else
         true

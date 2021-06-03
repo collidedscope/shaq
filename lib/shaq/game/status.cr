@@ -35,7 +35,7 @@ class Shaq::Game
     # if the opposing side has any Pawns, Knights, or opposite-colored Bishops
     # that could prevent the King's escape: https://lichess.org/o3PCfb98
     if ours.keys == [Bishop]
-      colors = friends(Bishop).map(&.color).uniq
+      colors = friends(Bishop).uniq &.color
       return false if colors.size == 2
       enemies.none? { |e| e.pawn? || e.knight? || e.bishop? && e.color != colors[0] }
     else
