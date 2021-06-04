@@ -119,4 +119,9 @@ class Shaq::Game
     board[from].try &.position = to
     board.swap from, to
   end
+
+  # for letting the current side make several moves in a row
+  def multiply(moves)
+    moves.each { |move| ply move; ply }
+  end
 end
