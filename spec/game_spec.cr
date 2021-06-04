@@ -57,4 +57,25 @@ describe Game do
       san_history.last.should eq "fxg6#"
     end
   end
+
+  it "knows about castling" do
+    new_game do
+      multiply %w[e4 Nf3 Bc4]
+      king.not_nil!.can_castle?(SHORT_CASTLE).should be_true
+
+      # moving the King removes castling rights
+      multiply %w[Ke2 Ke1]
+      king.not_nil!.can_castle?(SHORT_CASTLE).should be_false
+
+      ply # make it Black's turn
+      multiply %w[d5 Bf5 Nc6 Qd7]
+      king.not_nil!.can_castle?(LONG_CASTLE).should be_true
+
+      sim("O-O-O").king.not_nil!.position.should eq C8
+      multiply %w[Rb8 Ra8]
+
+      # moving the Rook also removes castling rights
+      king.not_nil!.can_castle?(LONG_CASTLE).should be_false
+    end
+  end
 end
