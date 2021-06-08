@@ -17,6 +17,14 @@ class Shaq::Game
     legal_moves.empty? && !check?
   end
 
+  def lost?
+    checkmate?
+  end
+
+  def won?
+    sim.lost?
+  end
+
   def bare_king?
     friends.all? &.king?
   end
