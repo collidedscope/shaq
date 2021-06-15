@@ -60,7 +60,7 @@ module Shaq
         s << '@' << Util.to_algebraic to
 
         g = sim(from, to).ply
-        s << (g.checkmate? ? '#' : g.check? ? '+' : "")
+        s << (g.lost? ? '#' : g.check? ? '+' : "")
       end
     end
 

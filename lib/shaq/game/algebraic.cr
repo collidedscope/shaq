@@ -19,7 +19,7 @@ class Shaq::Game
       s << '=' << "QNRB"[promo] if promo << 6 | to > 63
 
       g = sim(from, promo << 6 | to).ply
-      s << (g.checkmate? ? '#' : g.check? ? '+' : "")
+      s << (g.lost? ? '#' : g.check? ? '+' : "")
     end
   end
 

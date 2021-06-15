@@ -14,7 +14,7 @@ describe RacingKingsGame do
     end
   end
 
-  it "has a different definition of checkmate" do
+  it "has a different definition of lost" do
     subject RacingKingsGame.from_diagram <<-EOD do
       w - - 10 6
       8 . . . . . . . .
@@ -28,7 +28,7 @@ describe RacingKingsGame do
         a b c d e f g h
       EOD
       ply G7, H8
-      checkmate?.should be_true
+      lost?.should be_true
       san_history.last.should eq "Kh8#"
     end
   end
@@ -47,7 +47,7 @@ describe RacingKingsGame do
         a b c d e f g h
       EOD
       ply G7, H8
-      checkmate?.should be_false
+      lost?.should be_false
       ply B7, A8
       draw?.should be_true
     end
@@ -67,7 +67,7 @@ describe RacingKingsGame do
         a b c d e f g h
       EOD
       ply B7, A8
-      checkmate?.should be_true
+      lost?.should be_true
     end
   end
 
@@ -85,7 +85,7 @@ describe RacingKingsGame do
         a b c d e f g h
       EOD
       ply G7, F8
-      checkmate?.should be_true
+      lost?.should be_true
     end
   end
 end

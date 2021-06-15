@@ -14,7 +14,7 @@ module Shaq
       }
     end
 
-    def checkmate?
+    def lost?
       enemy_king = enemies.find(&.king?).not_nil!
       return false unless enemy_king.rank == 8
       return true if white?

@@ -10,5 +10,9 @@ module Shaq
     def check?
       black? && super
     end
+
+    def lost?
+      white? ? friends.empty? : checkmate?
+    end
   end
 end

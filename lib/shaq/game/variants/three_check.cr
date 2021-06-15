@@ -8,7 +8,7 @@ module Shaq
       super.tap { checks[turn] += 1 if check? }
     end
 
-    def checkmate?
+    def lost?
       super || checks[turn] == 3
     end
   end
