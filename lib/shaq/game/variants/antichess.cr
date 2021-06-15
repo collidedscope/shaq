@@ -15,5 +15,13 @@ module Shaq
       moves.select! &->occupied?(Int32) if can_capture?
       moves
     end
+
+    def won?
+      friends.empty?
+    end
+
+    def lost?
+      enemies.empty?
+    end
   end
 end
