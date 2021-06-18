@@ -17,7 +17,9 @@ class Shaq::Game
 
   def legal_moves
     friends.flat_map { |piece|
-      legal_moves_for(piece).map { |move| {piece.position, move} }
+      legal_moves_for(piece).map { |move|
+        {piece.position, move}
+      }.as Array(Tuple(Int32, Int32))
     }
   end
 
