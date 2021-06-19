@@ -80,6 +80,11 @@ module Shaq
       else           return nil
       end.new c.ascii_lowercase? ? Side::Black : Side::White, position
     end
+
+    def self.from_unicode(sym, position)
+      raise "Invalid piece symbol: '#{sym}'" unless '♔' <= sym <= '♟'
+      from_letter "KQRBNPkqrbnp"[sym - '♔'], position
+    end
   end
 
   class Pawn < Piece
