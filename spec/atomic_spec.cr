@@ -21,7 +21,7 @@ describe AtomicGame do
       ply "exd6"
       pieces.size.should eq 2
 
-      checkmate?.should be_true
+      lost?.should be_true
       san_history.last.should eq "exd6#"
     end
   end
@@ -148,7 +148,7 @@ describe AtomicGame do
       checkmate?.should be_false
       legal_moves_for(king).should be_empty
       legal_moves.should eq [{H4, F2}]
-      ply(H4, F2).checkmate?.should be_true
+      ply(H4, F2).lost?.should be_true
     end
   end
 

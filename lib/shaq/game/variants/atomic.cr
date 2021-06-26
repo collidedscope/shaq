@@ -20,8 +20,7 @@ module Shaq
       friends.none? &.king?
     end
 
-    # HACK: Consider our lack of a King to be check for legal move generation.
-    def check?
+    def lost?
       no_king? || super
     end
 
