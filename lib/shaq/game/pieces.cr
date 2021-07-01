@@ -39,4 +39,10 @@ class Shaq::Game
     raise "No #{turn} King?!" unless found = friends.find &.king?
     found.as King
   end
+
+  {% for piece in %w[Pawn Rook Knight Bishop Queen King] %}
+    def {{piece.downcase.id}}s
+      board.select {{piece.id}}
+    end
+  {% end %}
 end
